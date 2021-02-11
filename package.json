@@ -4,7 +4,8 @@
   "description": "Assigment provided by NENT as part of a recruitment process for a traineeship posistion",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "author": "Aldin Beriša",
   "license": "ISC",
