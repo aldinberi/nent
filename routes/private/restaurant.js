@@ -1,71 +1,10 @@
-let mongoose = require('mongoose')
+module.exports = (router, mongoose, config, express) => {
+	let model = require('../../models/mongoose/restaurant');
 
-let restaurantSchema = new mongoose.Schema({
-    opening_hours: {
-        type: [String],
-        required: true,
-    } ,
-    address: {
-        type: String,
-        required: true,
-    },
-    phone_number:{
-        type: String,
-        required: true,
-    },
-    location:{
-        lat: {
-            type: Number, 
-            required: true
-             
-          },
-        lng: {
-            type: Number,
-            required: true,
-        }
-    },
-    icon:{
-        type: String,
-        required: true,
-    },
-
-    name: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-
-    price_level: {
-        type: Number,
-        required: true,
-    },
-
-    rating: {
-        type: Number,
-        required: true,
-    },
-
-    google_maps_url:{
-        type: String,
-        required: true,
-        unique: true,
-    },
-    
-    website: {
-        type: String,
-        required: true,
-    },
-
-    photo: {
-        type: String,
-        required: true,
-    },
-
-    id:{
-        type: Number,
-        required: true,
-    }
-
-})
-
-module.exports = mongoose.model('Restaurant', restaurantSchema)
+    router.get("/", (req, res) => {
+        req.body.id = Math.floor(Math.random() * (Number.MAX_SAFE_INTEGER - 43) + 43);
+        model.find({}).then(doc => {
+          console.log(doc);
+        })
+	});
+};
