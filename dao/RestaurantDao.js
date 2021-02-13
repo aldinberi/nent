@@ -10,19 +10,20 @@ class RestaurantDao {
 		return this;
 	}
 
-    get_by_hours(req, res) {
-        let limit = Number(req.query.limit) || 5;
-		let offset = Number(req.query.offset) || 0;
+   get_by_hours  (req, res) {
+        const {limit, offset, startTime, endTime, day} = req.query
+        let limitNumber = Number(limit) || 5;
+		    let offsetNumber = Number(offset) || 0;
         let startString = "";
         let endString = "";
-        let dayString = req.query.day || "";
+        let dayString = day || "";
   
-        if(req.query.startTime){
-          startString = startString + ": " + req.query.startTime;
+        if(startTime){
+          startString = startString + ": " + startTime;
         }
   
-        if(req.query.endTime){
-          endString = endString + " – " + req.query.endTime;
+        if(endTime){
+          endString = endString + " – " + endTime;
         }
   
         this.model.aggregate([
@@ -30,30 +31,31 @@ class RestaurantDao {
           { $match: {opening_hours: {$regex: dayString, $options: 'i' } } },
           { $match: {opening_hours: {$regex: startString, $options: 'i' } } },
           { $match: {opening_hours: {$regex: endString, $options: 'i' } } },
-          { $skip: offset },
-          { $limit: limit }
-      ]).then(docs => {
+          { $skip: offsetNumber },
+          { $limit: limitNumber }
+        ]).then(docs => {
           res.json(docs);
         });  
     }
 
     get_by_fields(req, res){
-        let limit = Number(req.query.limit) || 5;
-		let offset = Number(req.query.offset) || 0;
+        const {limit, offset, sortType, sort, name, address} = req.query
+        let limitNumber = Number(limit) || 5;
+		    let offsetNumber = Number(offset) || 0;
 
         let toSort = {
-            [req.query.sort] : Number(req.query.sortType) || -1,
+            [sort] : Number(sortType) || -1,
           };
       
           let filter = {
-            [ req.query.name && "name"] : { $regex:req.query.name, $options: 'i' },
-            [ req.query.address && "address"] : { $regex:req.query.address, $options: 'i' },
+            [ name && "name"] : { $regex:name, $options: 'i' },
+            [ address && "address"] : { $regex:address, $options: 'i' },
           }
       
           delete filter[undefined];
           delete toSort[undefined];
-      
-          this.model.find(filter).skip(offset).limit(limit).sort(toSort).then(docs => {
+          
+          this.model.find(filter).skip(offsetNumber).limit(limitNumber).sort(toSort).then(docs => {
             res.json(docs);
           });
     }

@@ -8,7 +8,12 @@ if (!process.env.HEROKU) {
 	config = require("./config");
 }
 
-mongoose.connect(process.env.MONGODB_URL || config.MONGODB_URL, {useUnifiedTopology: true, useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_URL || config.MONGODB_URL, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+	useCreateIndex: true,
+	useFindAndModify: false
+});
 
 //app.get('/', (req, res) => res.send('Hello World'));
 
