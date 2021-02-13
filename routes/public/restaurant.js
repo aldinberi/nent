@@ -4,7 +4,7 @@ module.exports = (router) => {
 
   const restaurantDao = new RestaurantDao(modelRestaurant);
 
-	router.get("/", (req, res) => {
+	router.get("", (req, res) => {
     if( req.query.day || req.query.startTime || req.query.endTime ){
       restaurantDao.get_by_hours(req, res);
     }else{

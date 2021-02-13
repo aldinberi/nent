@@ -68,4 +68,4 @@ let restaurantSchema = new mongoose.Schema({
 
 })
 
-module.exports = mongoose.model('Restaurant', restaurantSchema);
+module.exports = mongoose.model('restaurants', restaurantSchema);
