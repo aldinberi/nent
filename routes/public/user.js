@@ -1,4 +1,4 @@
-module.exports = (router, mongoose, config, express) => {
+module.exports = (router, config) => {
 	const { body, validationResult } = require("express-validator");
 	const UserDao = require("../../dao/UserDao");
 	const userModel = require("../../models/mongoose/user");
