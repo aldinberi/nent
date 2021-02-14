@@ -16,13 +16,22 @@
  *      lat:
  *       type: double
  *       example: 59.31781179999999
- *      long:
+ *      lng:
  *       type: double
  *       example: 18.0701277
- *    working_hours:
+ *    opening_hours:
  *     type: array
  *     items:
  *      type: string
+ *     example:
+ *       - "Monday: 11:00 AM – 3:00 PM"
+ *       - "Tuesday: 11:00 AM – 3:00 PM"
+ *       - "Wednesday: 11:00 AM – 3:00 PM"
+ *       - "Thursday: 11:00 AM – 3:00 PM"
+ *       - "Friday: 11:00 AM – 3:00 PM"
+ *       - "Saturday: Closed"
+ *       - "Sunday: Closed"
+ *
  *    phone_number:
  *       type: string
  *       example: 08-641 20 77
@@ -44,11 +53,11 @@
  *    photo:
  *     type: string
  *     example: https://cdn.pixabay.com/photo/2016/11/18/22/21/architecture-1837150_1280.jpg
- *    required:
+ *   required:
  *     - name
  *     - address
  *     - location
- *     - working_hours
+ *     - opening_hours
  *     - phone_number
  *     - icon
  *     - google_maps_url
@@ -57,4 +66,46 @@
  *     - price_level
  *     - rating
  *
+ */
+
+/**
+ * @swagger
+ * definitions:
+ *  UserLogin:
+ *   type: object
+ *   properties:
+ *    email:
+ *     type: string
+ *     example: email@email.com
+ *    password:
+ *     type: string
+ *     example: password
+ *   required:
+ *     - email
+ *     - password
+ */
+
+/**
+ * @swagger
+ * definitions:
+ *  UserRegister:
+ *   type: object
+ *   properties:
+ *    email:
+ *     type: string
+ *     example: email@email.com
+ *    password:
+ *     type: string
+ *     example: password
+ *    first_name:
+ *     type: string
+ *     example: aldin
+ *    last_name:
+ *     type: string
+ *     example: berisa
+ *   required:
+ *     - email
+ *     - password
+ *     - first_name
+ *     - last_name
  */

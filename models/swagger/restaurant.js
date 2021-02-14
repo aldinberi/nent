@@ -24,6 +24,8 @@
  *           description: Invalid user request.
  *       401:
  *           description: Unauthorized access.
+ *       422:
+ *           description: Invalid data sent.
  *       500:
  *         description: Something is wrong with the service. Please contact the system administrator.
  */
@@ -82,6 +84,8 @@
  *           description: Invalid user request.
  *       401:
  *           description: Unauthorized access.
+ *       422:
+ *           description: Invalid data sent.
  *       500:
  *           description: Something is wrong with service please contact the system administrator
  */
@@ -110,6 +114,8 @@
  *           description: Invalid user request.
  *       401:
  *           description: Unauthorized access.
+ *       422:
+ *           description: Invalid data sent.
  *       500:
  *           description: Something is wrong with service please contact the system administrator
  */
@@ -139,6 +145,8 @@
  *           description: Invalid user request.
  *       401:
  *           description: Unauthorized access.
+ *       422:
+ *           description: Invalid data sent.
  *       500:
  *           description: Something is wrong with service please contact the system administrator
  */
