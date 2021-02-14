@@ -1,8 +1,10 @@
 module.exports = (router, mongoose, config, express) => {
 	const { body, validationResult } = require("express-validator");
+	const UserDao = require("../../dao/UserDao");
 	const userModel = require("../../models/mongoose/user");
 	const check_password = require("../../utils");
-	const bcrypt = require("bcrypt");
+
+	const userDao = new UserDao(userModel);
 
 	router.post(
 		"/register",
@@ -26,19 +28,7 @@ module.exports = (router, mongoose, config, express) => {
 			if (!validationErrors.isEmpty()) {
 				return res.status(422).json(validationErrors.array());
 			}
-
-			bcrypt.hash(req.body["password"], 10, async (err, hash) => {
-				try {
-					req.body["password"] = hash;
-					await userModel.validate(req.body);
-					const response = await userModel.create(req.body);
-					res.json(response);
-				} catch (error) {
-					if (error) {
-						return res.status(400).send(`Insertion failed! Reason: ${error.errmsg}`);
-					}
-				}
-			});
+			userDao.register(req, res);
 		}
 	);
 };
