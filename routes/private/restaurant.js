@@ -64,4 +64,8 @@ module.exports = (router, config, express) => {
 			restaurantDao.post(req, res);
 		}
 	);
+
+	router.delete("/:restaurantId", check("restaurantId").isAlphanumeric(), async (req, res) => {
+		restaurantDao.delete(req, res);
+	});
 };

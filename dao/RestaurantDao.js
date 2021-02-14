@@ -92,6 +92,18 @@ class RestaurantDao {
 			}
 		}
 	}
+
+	async delete(req, res) {
+		try {
+			let doc = await this.model.deleteOne({ _id: req.params.restaurantId });
+			res.send(doc);
+		} catch (error) {
+			if (error) {
+				console.log(error);
+				res.status(400).json({ message: `Delete failed. Reason: ${error.errmsg}` });
+			}
+		}
+	}
 }
 
 module.exports = RestaurantDao;
