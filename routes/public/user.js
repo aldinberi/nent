@@ -3,8 +3,7 @@ module.exports = (router, mongoose, config, express) => {
 	const UserDao = require("../../dao/UserDao");
 	const userModel = require("../../models/mongoose/user");
 	const check_password = require("../../utils");
-
-	const userDao = new UserDao(userModel);
+	const userDao = new UserDao(userModel, config);
 
 	router.post(
 		"/register",
@@ -31,4 +30,12 @@ module.exports = (router, mongoose, config, express) => {
 			userDao.register(req, res);
 		}
 	);
+
+	router.post("/login", body("email").isEmail().normalizeEmail(), async (req, res) => {
+		const validationErrors = validationResult(req);
+		if (!validationErrors.isEmpty()) {
+			return res.status(422).json(validationErrors.array());
+		}
+		userDao.login(req, res);
+	});
 };
