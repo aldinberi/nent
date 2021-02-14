@@ -23,7 +23,7 @@ class UserDao {
 				res.json(req.body);
 			} catch (error) {
 				if (error) {
-					return res.status(400).json(`Insertion failed! Reason: ${error.errmsg}`);
+					return res.status(400).json({ message: `Insertion failed! Reason: ${error.errmsg}` });
 				}
 			}
 		});

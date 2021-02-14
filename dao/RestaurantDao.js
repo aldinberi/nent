@@ -38,7 +38,7 @@ class RestaurantDao {
 			res.json(docs);
 		} catch (error) {
 			if (error) {
-				return res.status(400).json(`Insertion failed! Reason: ${error.errmsg}`);
+				return res.status(400).json({ message: `Read failed! Reason: ${error.errmsg}` });
 			}
 		}
 	}
@@ -65,7 +65,7 @@ class RestaurantDao {
 			res.json(docs);
 		} catch (error) {
 			if (error) {
-				return res.status(400).json(`Insertion failed! Reason: ${error.errmsg}`);
+				return res.status(400).json({ message: `Read failed! Reason: ${error.errmsg}` });
 			}
 		}
 	}
@@ -76,7 +76,19 @@ class RestaurantDao {
 			res.json({ doc });
 		} catch (error) {
 			if (error) {
-				return res.status(400).json(`Insertion failed! Reason: ${error.errmsg}`);
+				return res.status(400).json({ message: `Insertion failed! Reason: ${error.errmsg}` });
+			}
+		}
+	}
+
+	async get_by_id(req, res) {
+		try {
+			let doc = await this.model.findOne({ _id: req.params.restaurantId });
+			res.json({ doc });
+		} catch (error) {
+			console.log(error);
+			if (error) {
+				return res.status(400).json({ message: `Read failed! Reason: ${error.errmsg}` });
 			}
 		}
 	}
