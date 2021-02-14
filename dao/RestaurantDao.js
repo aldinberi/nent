@@ -10,7 +10,7 @@ class RestaurantDao {
 		return this;
 	}
 
-   get_by_hours  (req, res) {
+    async get_by_hours  (req, res) {
         const {limit, offset, startTime, endTime, day} = req.query
         let limitNumber = Number(limit) || 5;
 		    let offsetNumber = Number(offset) || 0;
@@ -26,19 +26,18 @@ class RestaurantDao {
           endString = endString + " – " + endTime;
         }
   
-        this.model.aggregate([
+        let docs = await this.model.aggregate([
           { $unwind: "$opening_hours" },
           { $match: {opening_hours: {$regex: dayString, $options: 'i' } } },
           { $match: {opening_hours: {$regex: startString, $options: 'i' } } },
           { $match: {opening_hours: {$regex: endString, $options: 'i' } } },
           { $skip: offsetNumber },
           { $limit: limitNumber }
-        ]).then(docs => {
-          res.json(docs);
-        });  
+        ]);
+        res.json(docs);
     }
 
-    get_by_fields(req, res){
+    async get_by_fields(req, res){
         const {limit, offset, sortType, sort, name, address} = req.query
         let limitNumber = Number(limit) || 5;
 		    let offsetNumber = Number(offset) || 0;
@@ -55,9 +54,8 @@ class RestaurantDao {
           delete filter[undefined];
           delete toSort[undefined];
           
-          this.model.find(filter).skip(offsetNumber).limit(limitNumber).sort(toSort).then(docs => {
-            res.json(docs);
-          });
+          let docs = await this.model.find(filter).skip(offsetNumber).limit(limitNumber).sort(toSort);
+          res.json(docs);
     }
 }
 
