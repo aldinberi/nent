@@ -1,6 +1,6 @@
 const bodyParser = require("body-parser");
-const express = require('express');
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const express = require("express");
 const app = express();
 
 /* Configuration import */
@@ -15,17 +15,13 @@ mongoose.connect(process.env.MONGODB_URL || config.MONGODB_URL, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useCreateIndex: true,
-	useFindAndModify: false
+	useFindAndModify: false,
 });
 
 //app.get('/', (req, res) => res.send('Hello World'));
 
 let router = express.Router();
-require("./routes/routes")(router, mongoose, config, express);
+require("./routes/routes")(router, config, express);
 app.use(router);
 
-
-
 module.exports = app;
-
-

@@ -10,53 +10,76 @@ class RestaurantDao {
 		return this;
 	}
 
-    async get_by_hours  (req, res) {
-        const {limit, offset, startTime, endTime, day} = req.query
-        let limitNumber = Number(limit) || 5;
-		    let offsetNumber = Number(offset) || 0;
-        let startString = "";
-        let endString = "";
-        let dayString = day || "";
-  
-        if(startTime){
-          startString = startString + ": " + startTime;
-        }
-  
-        if(endTime){
-          endString = endString + " – " + endTime;
-        }
-  
-        let docs = await this.model.aggregate([
-          { $unwind: "$opening_hours" },
-          { $match: {opening_hours: {$regex: dayString, $options: 'i' } } },
-          { $match: {opening_hours: {$regex: startString, $options: 'i' } } },
-          { $match: {opening_hours: {$regex: endString, $options: 'i' } } },
-          { $skip: offsetNumber },
-          { $limit: limitNumber }
-        ]);
-        res.json(docs);
-    }
+	async get_by_hours(req, res) {
+		const { limit, offset, startTime, endTime, day } = req.query;
+		let limitNumber = Number(limit) || 5;
+		let offsetNumber = Number(offset) || 0;
+		let startString = "";
+		let endString = "";
+		let dayString = day || "";
 
-    async get_by_fields(req, res){
-        const {limit, offset, sortType, sort, name, address} = req.query
-        let limitNumber = Number(limit) || 5;
-		    let offsetNumber = Number(offset) || 0;
+		if (startTime) {
+			startString = startString + ": " + startTime;
+		}
 
-        let toSort = {
-            [sort] : Number(sortType) || -1,
-          };
-      
-          let filter = {
-            [ name && "name"] : { $regex:name, $options: 'i' },
-            [ address && "address"] : { $regex:address, $options: 'i' },
-          }
-      
-          delete filter[undefined];
-          delete toSort[undefined];
-          
-          let docs = await this.model.find(filter).skip(offsetNumber).limit(limitNumber).sort(toSort);
-          res.json(docs);
-    }
+		if (endTime) {
+			endString = endString + " – " + endTime;
+		}
+
+		try {
+			let docs = await this.model.aggregate([
+				{ $unwind: "$opening_hours" },
+				{ $match: { opening_hours: { $regex: dayString, $options: "i" } } },
+				{ $match: { opening_hours: { $regex: startString, $options: "i" } } },
+				{ $match: { opening_hours: { $regex: endString, $options: "i" } } },
+				{ $skip: offsetNumber },
+				{ $limit: limitNumber },
+			]);
+			res.json(docs);
+		} catch (error) {
+			if (error) {
+				return res.status(400).json(`Insertion failed! Reason: ${error.errmsg}`);
+			}
+		}
+	}
+
+	async get_by_fields(req, res) {
+		const { limit, offset, sortType, sort, name, address } = req.query;
+		let limitNumber = Number(limit) || 5;
+		let offsetNumber = Number(offset) || 0;
+
+		let toSort = {
+			[sort]: Number(sortType) || -1,
+		};
+
+		let filter = {
+			[name && "name"]: { $regex: name, $options: "i" },
+			[address && "address"]: { $regex: address, $options: "i" },
+		};
+
+		delete filter[undefined];
+		delete toSort[undefined];
+
+		try {
+			let docs = await this.model.find(filter).skip(offsetNumber).limit(limitNumber).sort(toSort);
+			res.json(docs);
+		} catch (error) {
+			if (error) {
+				return res.status(400).json(`Insertion failed! Reason: ${error.errmsg}`);
+			}
+		}
+	}
+
+	async post(req, res) {
+		try {
+			let doc = await this.model.create(req.body);
+			res.json({ doc });
+		} catch (error) {
+			if (error) {
+				return res.status(400).json(`Insertion failed! Reason: ${error.errmsg}`);
+			}
+		}
+	}
 }
 
 module.exports = RestaurantDao;

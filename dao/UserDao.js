@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 class UserDao {
-	constructor(model, config) {
+	constructor(model, config, jwt) {
 		if (!!UserDao.instance) {
 			return UserDao.instance;
 		}
@@ -9,6 +8,7 @@ class UserDao {
 		UserDao.instance = this;
 		this.model = model;
 		this.config = config;
+		this.jwt = jwt;
 
 		return this;
 	}
@@ -41,7 +41,7 @@ class UserDao {
 			if (!response) {
 				return res.status(403).json({ message: "Incorrect credentials" });
 			} else {
-				jwtToken = jwt.sign(
+				jwtToken = this.jwt.sign(
 					{
 						id: doc._id,
 						username: doc.email,

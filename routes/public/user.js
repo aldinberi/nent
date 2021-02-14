@@ -1,9 +1,9 @@
-module.exports = (router, config) => {
+module.exports = (router, config, jwt) => {
 	const { body, validationResult } = require("express-validator");
 	const UserDao = require("../../dao/UserDao");
 	const userModel = require("../../models/mongoose/user");
 	const check_password = require("../../utils");
-	const userDao = new UserDao(userModel, config);
+	const userDao = new UserDao(userModel, config, jwt);
 
 	router.post(
 		"/register",
