@@ -1,14 +1,18 @@
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const express = require("express");
-const app = express();
+const cors = require("cors");
 
 /* Configuration import */
 let config;
+
+console.log();
+
 if (!process.env.HEROKU) {
 	config = require("./config");
 }
 
+const app = express();
 app.use(bodyParser.json());
 
 mongoose.connect(process.env.MONGODB_URL || config.MONGODB_URL, {
@@ -17,8 +21,6 @@ mongoose.connect(process.env.MONGODB_URL || config.MONGODB_URL, {
 	useCreateIndex: true,
 	useFindAndModify: false,
 });
-
-//app.get('/', (req, res) => res.send('Hello World'));
 
 let router = express.Router();
 require("./routes/routes")(router, config, express);
