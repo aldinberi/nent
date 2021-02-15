@@ -28,5 +28,5 @@ module.exports = (router, config, swaggerJSDoc, swaggerUi) => {
 		res.send(swaggerSpec);
 	});
 
-	router.use("/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+	router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 };
