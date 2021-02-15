@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGODB_URL || config.MONGODB_URL, {
 	useFindAndModify: false,
 });
 
-//app.get('/', (req, res) => res.send('Hello World'));
+app.get("/", (req, res) => res.send("Hello World"));
 
 let router = express.Router();
 require("./routes/routes")(router, config, express);
