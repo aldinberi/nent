@@ -38,7 +38,7 @@ class RestaurantDao {
 			res.json(docs);
 		} catch (error) {
 			if (error) {
-				return res.status(400).json({ message: `Read failed! Reason: ${error.errmsg}` });
+				return res.status(400).json({ message: `Read failed! Reason: ${error.errmsg || error._message}` });
 			}
 		}
 	}
@@ -65,7 +65,7 @@ class RestaurantDao {
 			res.json(docs);
 		} catch (error) {
 			if (error) {
-				return res.status(400).json({ message: `Read failed! Reason: ${error.errmsg}` });
+				return res.status(400).json({ message: `Read failed! Reason: ${error.errmsg || error._message}` });
 			}
 		}
 	}
@@ -77,7 +77,7 @@ class RestaurantDao {
 		} catch (error) {
 			if (error) {
 				console.log(error);
-				return res.status(400).json({ message: `Insertion failed! Reason: ${error.errmsg}` });
+				return res.status(400).json({ message: `Insertion failed! Reason: ${error.errmsg || error._message}` });
 			}
 		}
 	}
@@ -89,7 +89,7 @@ class RestaurantDao {
 		} catch (error) {
 			console.log(error);
 			if (error) {
-				return res.status(400).json({ message: `Read failed! Reason: ${error.errmsg}` });
+				return res.status(400).json({ message: `Read failed! Reason: ${error.errmsg || error._message}` });
 			}
 		}
 	}
@@ -101,7 +101,7 @@ class RestaurantDao {
 		} catch (error) {
 			if (error) {
 				console.log(error);
-				res.status(400).json({ message: `Delete failed. Reason: ${error.errmsg}` });
+				res.status(400).json({ message: `Delete failed. Reason: ${error.errmsg || error._message}` });
 			}
 		}
 	}

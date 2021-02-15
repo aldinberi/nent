@@ -1,9 +1,10 @@
 module.exports = (router, config, express) => {
+	const { checkSchema, check, validationResult } = require("express-validator");
+	const restaurantValidation = require("../../models/validator/restaurant");
 	const modelRestaurant = require("../../models/mongoose/restaurant");
 	const RestaurantDao = require("../../dao/RestaurantDao");
-	const restaurantValidation = require("../../models/validator/restaurant");
+
 	const restaurantDao = new RestaurantDao(modelRestaurant);
-	const { checkSchema, check, validationResult } = require("express-validator");
 
 	router.post("", checkSchema(restaurantValidation), (req, res) => {
 		const validationErrors = validationResult(req);

@@ -22,8 +22,9 @@ class UserDao {
 				delete req.body.password;
 				res.json(req.body);
 			} catch (error) {
+				console.log(error);
 				if (error) {
-					return res.status(400).json({ message: `Insertion failed! Reason: ${error.errmsg}` });
+					return res.status(400).json({ message: `Insertion failed! Reason: ${error.errmsg || error._message}` });
 				}
 			}
 		});
