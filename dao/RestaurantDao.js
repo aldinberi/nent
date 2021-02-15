@@ -36,9 +36,9 @@ class RestaurantDao {
 				{ $limit: limitNumber },
 			]);
 			res.json(docs);
-		} catch (error) {
-			if (error) {
-				return res.status(400).json({ message: `Read failed! Reason: ${error.errmsg || error._message}` });
+		} catch (exception) {
+			if (exception) {
+				return res.status(400).json({ message: `Read failed! Reason: ${exception.errmsg || exception._message}` });
 			}
 		}
 	}
@@ -63,9 +63,9 @@ class RestaurantDao {
 		try {
 			let docs = await this.model.find(filter).skip(offsetNumber).limit(limitNumber).sort(toSort);
 			res.json(docs);
-		} catch (error) {
-			if (error) {
-				return res.status(400).json({ message: `Read failed! Reason: ${error.errmsg || error._message}` });
+		} catch (exception) {
+			if (exception) {
+				return res.status(400).json({ message: `Read failed! Reason: ${exception.errmsg || exception._message}` });
 			}
 		}
 	}
@@ -74,10 +74,10 @@ class RestaurantDao {
 		try {
 			let doc = await this.model.create(req.body);
 			res.json({ doc });
-		} catch (error) {
-			if (error) {
-				console.log(error);
-				return res.status(400).json({ message: `Insertion failed! Reason: ${error.errmsg || error._message}` });
+		} catch (exception) {
+			if (exception) {
+				console.log(exception);
+				return res.status(400).json({ message: `Insertion failed! Reason: ${exception.errmsg || exception._message}` });
 			}
 		}
 	}
@@ -86,10 +86,9 @@ class RestaurantDao {
 		try {
 			let doc = await this.model.findOne({ _id: req.params.restaurantId });
 			res.json({ doc });
-		} catch (error) {
-			console.log(error);
-			if (error) {
-				return res.status(400).json({ message: `Read failed! Reason: ${error.errmsg || error._message}` });
+		} catch (exception) {
+			if (exception) {
+				return res.status(400).json({ message: `Read failed! Reason: ${exception.errmsg || exception._message}` });
 			}
 		}
 	}
@@ -98,10 +97,21 @@ class RestaurantDao {
 		try {
 			let doc = await this.model.deleteOne({ _id: req.params.restaurantId });
 			res.send(doc);
-		} catch (error) {
-			if (error) {
-				console.log(error);
-				res.status(400).json({ message: `Delete failed. Reason: ${error.errmsg || error._message}` });
+		} catch (exception) {
+			if (exception) {
+				res.status(400).json({ message: `Delete failed. Reason: ${exception.errmsg || exception._message}` });
+			}
+		}
+	}
+	async update(req, res) {
+		try {
+			let doc = await this.model.findOneAndUpdate({ _id: req.params.restaurantId }, req.body, {
+				new: true,
+			});
+			res.send(doc);
+		} catch (exception) {
+			if (exception) {
+				res.status(400).json({ message: `Update failed. Reason: ${exception.errmsg || exception._message}` });
 			}
 		}
 	}

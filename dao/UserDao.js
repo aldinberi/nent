@@ -21,10 +21,9 @@ class UserDao {
 				await this.model.create(req.body);
 				delete req.body.password;
 				res.json(req.body);
-			} catch (error) {
-				console.log(error);
-				if (error) {
-					return res.status(400).json({ message: `Insertion failed! Reason: ${error.errmsg || error._message}` });
+			} catch (exception) {
+				if (exception) {
+					return res.status(400).json({ message: `Insertion failed! Reason: ${exception.errmsg || exception._message}` });
 				}
 			}
 		});
@@ -58,8 +57,8 @@ class UserDao {
 					jwt: jwtToken,
 				});
 			}
-		} catch (err) {
-			res.status(400).send({ message: `Error: ${err}` });
+		} catch (exception) {
+			res.status(400).send({ message: `Error: ${exception}` });
 		}
 	}
 }
