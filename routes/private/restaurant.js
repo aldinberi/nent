@@ -1,10 +1,12 @@
 module.exports = (router, config, express) => {
+	const { restaurantPostValidation, restaurantPutValidation } = require("../../models/validator/restaurant");
+	const { checkSchema, check, validationResult } = require("express-validator");
 	const modelRestaurant = require("../../models/mongoose/restaurant");
 	const RestaurantDao = require("../../dao/RestaurantDao");
-	const restaurantValidation = require("../../models/validator/restaurant");
+
 	const restaurantDao = new RestaurantDao(modelRestaurant);
-	const { checkSchema, check, validationResult } = require("express-validator");
-	router.post("", checkSchema(restaurantValidation), (req, res) => {
+
+	router.post("", checkSchema(restaurantPostValidation), (req, res) => {
 		const validationErrors = validationResult(req);
 		if (!validationErrors.isEmpty()) {
 			return res.status(422).json(validationErrors.array());
@@ -13,6 +15,23 @@ module.exports = (router, config, express) => {
 	});
 
 	router.delete("/:restaurantId", check("restaurantId").isAlphanumeric(), async (req, res) => {
+		const validationErrors = validationResult(req);
+		if (!validationErrors.isEmpty()) {
+			return res.status(422).json(validationErrors.array());
+		}
 		restaurantDao.delete(req, res);
 	});
+
+	router.put(
+		"/:restaurantId",
+		check("restaurantId").isAlphanumeric(),
+		checkSchema(restaurantPutValidation),
+		async (req, res) => {
+			const validationErrors = validationResult(req);
+			if (!validationErrors.isEmpty()) {
+				return res.status(422).json(validationErrors.array());
+			}
+			restaurantDao.update(req, res);
+		}
+	);
 };

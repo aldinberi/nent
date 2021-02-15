@@ -150,3 +150,40 @@
  *       500:
  *           description: Something is wrong with service please contact the system administrator
  */
+
+/**
+ * @swagger
+ * /restaurant/{id}:
+ *   put:
+ *     tags:
+ *       - restaurants
+ *     name: updateRestaurantById
+ *     summary: Update a restaurant based by id
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: ID of the restaurant
+ *         required: true
+ *         type: string
+ *       - in: body
+ *         name: body
+ *         description: Restaurant object
+ *         required: true
+ *         schema:
+ *             $ref: "#/definitions/Restaurant"
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *           description: Successfully updated a restaurant based on id
+ *       400:
+ *           description: Invalid user request.
+ *       401:
+ *           description: Unauthorized access.
+ *       422:
+ *           description: Invalid data sent.
+ *       500:
+ *           description: Something is wrong with service please contact the system administrator
+ */
