@@ -76,6 +76,7 @@ class RestaurantDao {
 			res.json({ doc });
 		} catch (error) {
 			if (error) {
+				console.log(error);
 				return res.status(400).json({ message: `Insertion failed! Reason: ${error.errmsg}` });
 			}
 		}
