@@ -4,6 +4,7 @@ module.exports = (router, config, express) => {
 	const restaurantValidation = require("../../models/validator/restaurant");
 	const restaurantDao = new RestaurantDao(modelRestaurant);
 	const { checkSchema, check, validationResult } = require("express-validator");
+
 	router.post("", checkSchema(restaurantValidation), (req, res) => {
 		const validationErrors = validationResult(req);
 		if (!validationErrors.isEmpty()) {
@@ -13,6 +14,10 @@ module.exports = (router, config, express) => {
 	});
 
 	router.delete("/:restaurantId", check("restaurantId").isAlphanumeric(), async (req, res) => {
+		const validationErrors = validationResult(req);
+		if (!validationErrors.isEmpty()) {
+			return res.status(422).json(validationErrors.array());
+		}
 		restaurantDao.delete(req, res);
 	});
 };

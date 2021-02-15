@@ -79,7 +79,13 @@ let restaurantValidation = {
 	},
 	google_maps_url: {
 		isURL: true,
-		contains: "maps.google.com",
+		custom: {
+			options: async (value) => {
+				if (!value.includes("maps.google.com")) {
+					return Promise.reject("Invalid google map url");
+				}
+			},
+		},
 	},
 	website: {
 		isURL: true,
