@@ -8,8 +8,8 @@
 - [Technologies](#technologies)
 - [Setup](#setup)
 - [Features](#features)
-  * [Required features](#required-features)
-  * [Additional features](#additional-features)
+  - [Required features](#required-features)
+  - [Additional features](#additional-features)
 - [Possible improvments](#possible-improvments)
 
 ## General info
@@ -84,7 +84,7 @@ Besides the API validation, a validation schema has been added on the database l
 
 #### Update restaurant API
 
-For full CRUD a update API is required. The API for updating a single restaurant is located at the route `/restaurant/:id` with the usage of PUT method. One requirement to be able to post is for the request to have in the header a JWT token with a specific signature. This JWT token is generated when a user logs in using the route `/user/login`. This has been added because in the real world we wouldn't let anyone be able to post restaurants on the systems but rather only specific individuals. All data being send in the body of the PUT request as well the provided id is being validated by the API for the right type and contents. One example is that it's not allowed to post a restaurant with a name that already exists in the database.
+For full CRUD an update API is required. The API for updating a single restaurant is located at the route `/restaurant/:id` with the usage of PUT method. One requirement to be able to post is for the request to have in the header a JWT token with a specific signature. This JWT token is generated when a user logs in using the route `/user/login`. This has been added because in the real world we wouldn't let anyone be able to post restaurants on the systems but rather only specific individuals. All data being send in the body of the PUT request as well the provided id is being validated by the API for the right type and contents. One example is that it's not allowed to post a restaurant with a name that already exists in the database.
 
 #### User APIs
 
