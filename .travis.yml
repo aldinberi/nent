@@ -14,3 +14,4 @@ deploy:
  app: nent-a
  on:
   repo: aldinberi/nent
+  branch: main
