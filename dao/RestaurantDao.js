@@ -74,7 +74,7 @@ class RestaurantDao {
 	async post(req, res) {
 		try {
 			let doc = await this.model.create(req.body);
-			res.json({ doc });
+			res.json(doc);
 		} catch (exception) {
 			if (exception) {
 				console.log(exception);
