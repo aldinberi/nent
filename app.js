@@ -5,13 +5,11 @@ const express = require("express");
 /* Configuration import */
 let config;
 
-console.log();
-
 if (!process.env.HEROKU) {
 	config = require("./config");
 }
 
-console.log(process.env.HEROKU);
+console.log("It is hope " + process.env.DB);
 
 const app = express();
 app.use(bodyParser.json());
