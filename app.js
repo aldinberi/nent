@@ -11,6 +11,8 @@ if (!process.env.HEROKU) {
 	config = require("./config");
 }
 
+console.log(process.env.HEROKU);
+
 const app = express();
 app.use(bodyParser.json());
 
