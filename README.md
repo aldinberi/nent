@@ -8,10 +8,8 @@
 - [Technologies](#technologies)
 - [Setup](#setup)
 - [Features](#features)
-
-* [Required features](#required-features)
-* [Additional features](#additional-features)
-
+  * [Required features](#required-features)
+  * [Additional features](#additional-features)
 - [Possible improvments](#possible-improvments)
 
 ## General info
