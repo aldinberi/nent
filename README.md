@@ -53,7 +53,7 @@ The API for getting more info on a single restaurant is located at the route `/r
 
 #### Endpoint for posting a single restaurant
 
-The API for posting a single restaurant is located at the route `/restaurant` with the usage of POST method. One requirement to be able to post is for the request to have in the header a JWT token with a specific signature. This JWT token is generated when a user logs in using the route `/user/login`. This has been added because in the real world we wouldn't let anyone be able to post restaurants on the systems but rather only specific individuals. All data being send in the body of the POST request is being validated API for the right type and contents. One example is that it's not allowed to post a restaurant with a name that already exists in the database.
+The API for posting a single restaurant is located at the route `/restaurant` with the usage of POST method. One requirement to be able to post is for the request to have in the header a JWT token with a specific signature. This JWT token is generated when a user logs in using the route `/user/login`. This has been added because in the real world we wouldn't let anyone be able to post restaurants on the systems but rather only specific individuals. All data being send in the body of the POST request is being validated by the API for the right type and contents. One example is that it's not allowed to post a restaurant with a name that already exists in the database.
 
 #### Endpoint for deleting a single restaurant
 
@@ -83,6 +83,10 @@ One additional feature added is the inclusion of Travis CI which allows continuo
 Validation has been added to all possible inputs of the APIs using express-validator which checks for the type of the inputted data as well as if it contains the right content, for example, the first name not having special characters or latitude being greater than 90.
 
 Besides the API validation, a validation schema has been added on the database level as well preventing the creating of additional fields, locking the type of data in the fields, and which fields are required for the creation of a record (document).
+
+#### Update restaurant API
+
+For full CRUD a update API is required. The API for updating a single restaurant is located at the route `/restaurant/:id` with the usage of PUT method. One requirement to be able to post is for the request to have in the header a JWT token with a specific signature. This JWT token is generated when a user logs in using the route `/user/login`. This has been added because in the real world we wouldn't let anyone be able to post restaurants on the systems but rather only specific individuals. All data being send in the body of the PUT request as well the provided id is being validated by the API for the right type and contents. One example is that it's not allowed to post a restaurant with a name that already exists in the database.
 
 #### User APIs
 
