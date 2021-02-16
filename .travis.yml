@@ -1,16 +1,17 @@
 language: node_js
 node_js:
- - stable
+- stable
 cache:
- directories:
+  directories:
   - node_modules
 branches:
- only:
+  only:
   - main
 deploy:
- provider: heroku
- api_key:
-  secure: tgf/ellQApK8KpnsXSsMfHnB6QXbSTWhriaxtALDT8t7RcObE1nB2XMrCEUklINjt6NEhYE0jqymgOqiC7kZ9xtfTyDPigkF58nXUer6S3BNKJd8hdkkwNKu12DX258H5+IbJaEr05RxNVjdVYvvQum6Wc1LrYSIR2dihoaqNuza9MuaKCQjnhVE/BfufSw3vTKbNqs4fCKKVyBkwfUSJSXlYwwlXGT5qc0G8MBsjeQXhf+Q1srrchNca6mEFyaw/wT4fWcg0xh2SP5KTSe8WFBC5V4WZ5QpQAUnTcr+KD+SrQnKMoWCncvmCfKXGTEra3/ULDBqauwwCYjMtFUvbPbsXlo//ejrX0g4e75bmwHbUSDDJReYiILZ2tgGIUUl99zM0i6SVucfWzKZE7R5BnS0V/UWjBZZAELpjPBBwdrI44yqx7aDyzI7ZYrgZ+MgInP7A0ZVaEJ+36XVPaY6yg/RwOjTtyK1iT2bcrPXhAP8iYmkvh+Cir8zDmeGvqeulZ7vWwRPGuylh7MEy13670/2I7oTn05usfEaxkAGbFVmHFcVbnCQtdd4Vk7gt5lQTtHxTLuSAq8DskrTLIuIWGdhK3aKinOR+pUEE71Yp0VSVW5JLiiSuV1aOO2nGfoUfkH55iNQzc09mXYwe1cE8PWgI+RdoxpW9WdUJ03aoTo=
- app: nent-a
- on:
-  repo: aldinberi/nent
+  provider: heroku
+  api_key:
+    secure: jnJ9+u6QX59oXQx6XWu1NQvVUWM5JsX19mDV3IOYw3dKvy9orhmxQCxAKZpJ6IpzzbhHBY4b71ddfLvueQvvTjd5X+He8+aObrQ2kdygiCCRn3gBGo9xgRp8WND7GU+PuVviKNTgz4xr8+xvWA18oUHSSDQhtSxt/ZfOZAjCWFaA0ilJO1dqPUO+jEdYazUAEYDl557FbkaUg/089svNjCdY83AA0JmJBCJzPUrTLN+KWE78Hy+chuGXCen4Gjp6/feeowovpYPqGimczpedSZGky4RvK2treRUNj7EuggpTzo3YqoQEVo8nBEPoWCsRglQRzwzXDM6yuboPLA4okKJkyBmuifUcki1YkEl8ZYj6mI5t5emfE4CN7w87FkXXc546zm+X45X/H25RxbLD96MtkwK6hNqL7flRYmIgsYiLmH+WaYtWLQva/bzSSZ97UI5Q0pjxceDV+B8v+YvOr3hfc9BCKKjbMuvPsxTt3UEaTLv7HKamLaE0vHzU9PLzRI4jTF1eCXmqFmpU11VE9MsWsu9HyNyZ2vMyd2fkN6+ey3awlHnM012WPXTQoc/6f0bjbHXEmI9T92v152tUtopybuz4f9MgfS7mjf9P8W0WSD0rQTgFBtjb16o/BjLmMOTS9xcWbDRX9bgDG+TnWP0fTKrjbQtTpCa4ST6YR0E=
+  app: nent-a
+  on:
+    repo: aldinberi/nent
+    branch: main
