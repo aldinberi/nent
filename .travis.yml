@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+ - stable
+cache:
+ directories:
+  - node_modules
+branches:
+ only:
+  - main
+deploy:
+ provider: heroku
+ api_key:
+  secure: tgf/ellQApK8KpnsXSsMfHnB6QXbSTWhriaxtALDT8t7RcObE1nB2XMrCEUklINjt6NEhYE0jqymgOqiC7kZ9xtfTyDPigkF58nXUer6S3BNKJd8hdkkwNKu12DX258H5+IbJaEr05RxNVjdVYvvQum6Wc1LrYSIR2dihoaqNuza9MuaKCQjnhVE/BfufSw3vTKbNqs4fCKKVyBkwfUSJSXlYwwlXGT5qc0G8MBsjeQXhf+Q1srrchNca6mEFyaw/wT4fWcg0xh2SP5KTSe8WFBC5V4WZ5QpQAUnTcr+KD+SrQnKMoWCncvmCfKXGTEra3/ULDBqauwwCYjMtFUvbPbsXlo//ejrX0g4e75bmwHbUSDDJReYiILZ2tgGIUUl99zM0i6SVucfWzKZE7R5BnS0V/UWjBZZAELpjPBBwdrI44yqx7aDyzI7ZYrgZ+MgInP7A0ZVaEJ+36XVPaY6yg/RwOjTtyK1iT2bcrPXhAP8iYmkvh+Cir8zDmeGvqeulZ7vWwRPGuylh7MEy13670/2I7oTn05usfEaxkAGbFVmHFcVbnCQtdd4Vk7gt5lQTtHxTLuSAq8DskrTLIuIWGdhK3aKinOR+pUEE71Yp0VSVW5JLiiSuV1aOO2nGfoUfkH55iNQzc09mXYwe1cE8PWgI+RdoxpW9WdUJ03aoTo=
+ app: nent-a
+ on:
+  repo: aldinberi/nent

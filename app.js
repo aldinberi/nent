@@ -5,8 +5,6 @@ const express = require("express");
 /* Configuration import */
 let config;
 
-console.log();
-
 if (!process.env.HEROKU) {
 	config = require("./config");
 }
