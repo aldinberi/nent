@@ -258,7 +258,6 @@ describe("Test the API for inserting resturant", () => {
 			})
 			.set("Authorization", jwt);
 		json_res = response.body;
-		console.log(json_res);
 		expect(response.statusCode).toBe(422);
 		expect(json_res[0].param).toBe("name");
 		expect(json_res[0].msg).toBe("Restaurant with that name already in use");
@@ -293,7 +292,6 @@ describe("Test the API for inserting resturant", () => {
 			})
 			.set("Authorization", jwt);
 		json_res = response.body;
-		console.log(json_res);
 		expect(response.statusCode).toBe(422);
 		expect(json_res[0].param).toBe("name");
 		expect(json_res[0].msg).toBe("Invalid name");
@@ -328,7 +326,6 @@ describe("Test the API for inserting resturant", () => {
 			})
 			.set("Authorization", jwt);
 		json_res = response.body;
-		console.log(json_res);
 		expect(response.statusCode).toBe(422);
 		expect(json_res[0].param).toBe("address");
 		expect(json_res[0].msg).toBe("Invalid address");
@@ -363,7 +360,6 @@ describe("Test the API for inserting resturant", () => {
 			})
 			.set("Authorization", jwt);
 		json_res = response.body;
-		console.log(json_res);
 		expect(response.statusCode).toBe(422);
 		expect(json_res[0].param).toBe("opening_hours");
 		expect(json_res[0].msg).toBe("Invalid opening hours");
@@ -398,10 +394,213 @@ describe("Test the API for inserting resturant", () => {
 			})
 			.set("Authorization", jwt);
 		json_res = response.body;
-		console.log(json_res);
 		expect(response.statusCode).toBe(422);
 		expect(json_res[0].param).toBe("phone_number");
-		expect(json_res[0].msg).toBe("Invalid opening hours");
+		expect(json_res[0].msg).toBe("Invalid phone number");
+	});
+
+	test("It should response with the restaurant invalid rating", async () => {
+		const response = await request(app)
+			.post("/restaurant")
+			.send({
+				name: "Jaka",
+				address: "Repslagargatan 8, 118 46 Stockholm, Sweden",
+				location: {
+					lat: 59.31781179999999,
+					lng: 18.0701277,
+				},
+				opening_hours: [
+					"Monday: 11:00 AM – 3:00 PM",
+					"Tuesday: 11:00 AM – 3:00 PM",
+					"Wednesday: 11:00 AM – 3:00 PM",
+					"Thursday: 11:00 AM – 3:00 PM",
+					"Friday: 11:00 AM – 3:00 PM",
+					"Saturday: Closed",
+					"Sunday: Closed",
+				],
+				phone_number: "08-641 20 77",
+				rating: 464,
+				price_level: 2,
+				icon: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+				google_maps_url: "https://maps.google.com/?cid=9369167126300605621",
+				website: "http://www.tamarindo.se/",
+				photo: "https://cdn.pixabay.com/photo/2016/11/18/22/21/architecture-1837150_1280.jpg",
+			})
+			.set("Authorization", jwt);
+		json_res = response.body;
+		expect(response.statusCode).toBe(422);
+		expect(json_res[0].param).toBe("rating");
+		expect(json_res[0].msg).toBe("Invalid rating");
+	});
+
+	test("It should response with the restaurant invalid price level", async () => {
+		const response = await request(app)
+			.post("/restaurant")
+			.send({
+				name: "Jaka",
+				address: "Repslagargatan 8, 118 46 Stockholm, Sweden",
+				location: {
+					lat: 59.31781179999999,
+					lng: 18.0701277,
+				},
+				opening_hours: [
+					"Monday: 11:00 AM – 3:00 PM",
+					"Tuesday: 11:00 AM – 3:00 PM",
+					"Wednesday: 11:00 AM – 3:00 PM",
+					"Thursday: 11:00 AM – 3:00 PM",
+					"Friday: 11:00 AM – 3:00 PM",
+					"Saturday: Closed",
+					"Sunday: Closed",
+				],
+				phone_number: "08-641 20 77",
+				rating: 4.4,
+				price_level: 678,
+				icon: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+				google_maps_url: "https://maps.google.com/?cid=9369167126300605621",
+				website: "http://www.tamarindo.se/",
+				photo: "https://cdn.pixabay.com/photo/2016/11/18/22/21/architecture-1837150_1280.jpg",
+			})
+			.set("Authorization", jwt);
+		json_res = response.body;
+		expect(response.statusCode).toBe(422);
+		expect(json_res[0].param).toBe("price_level");
+		expect(json_res[0].msg).toBe("Invalid price_level");
+	});
+
+	test("It should response with the restaurant invalid icon link", async () => {
+		const response = await request(app)
+			.post("/restaurant")
+			.send({
+				name: "Jaka",
+				address: "Repslagargatan 8, 118 46 Stockholm, Sweden",
+				location: {
+					lat: 59.31781179999999,
+					lng: 18.0701277,
+				},
+				opening_hours: [
+					"Monday: 11:00 AM – 3:00 PM",
+					"Tuesday: 11:00 AM – 3:00 PM",
+					"Wednesday: 11:00 AM – 3:00 PM",
+					"Thursday: 11:00 AM – 3:00 PM",
+					"Friday: 11:00 AM – 3:00 PM",
+					"Saturday: Closed",
+					"Sunday: Closed",
+				],
+				phone_number: "08-641 20 77",
+				rating: 4.4,
+				price_level: 2,
+				icon: "dfgdfd",
+				google_maps_url: "https://maps.google.com/?cid=9369167126300605621",
+				website: "http://www.tamarindo.se/",
+				photo: "https://cdn.pixabay.com/photo/2016/11/18/22/21/architecture-1837150_1280.jpg",
+			})
+			.set("Authorization", jwt);
+		json_res = response.body;
+		expect(response.statusCode).toBe(422);
+		expect(json_res[0].param).toBe("icon");
+		expect(json_res[0].msg).toBe("Invalid value");
+	});
+
+	test("It should response with the restaurant invalid google map url link", async () => {
+		const response = await request(app)
+			.post("/restaurant")
+			.send({
+				name: "Jaka",
+				address: "Repslagargatan 8, 118 46 Stockholm, Sweden",
+				location: {
+					lat: 59.31781179999999,
+					lng: 18.0701277,
+				},
+				opening_hours: [
+					"Monday: 11:00 AM – 3:00 PM",
+					"Tuesday: 11:00 AM – 3:00 PM",
+					"Wednesday: 11:00 AM – 3:00 PM",
+					"Thursday: 11:00 AM – 3:00 PM",
+					"Friday: 11:00 AM – 3:00 PM",
+					"Saturday: Closed",
+					"Sunday: Closed",
+				],
+				phone_number: "08-641 20 77",
+				rating: 4.4,
+				price_level: 2,
+				icon: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+				google_maps_url: "https://hello.com/?cid=9369167126300605621",
+				website: "http://www.tamarindo.se/",
+				photo: "https://cdn.pixabay.com/photo/2016/11/18/22/21/architecture-1837150_1280.jpg",
+			})
+			.set("Authorization", jwt);
+		json_res = response.body;
+		expect(response.statusCode).toBe(422);
+		expect(json_res[0].param).toBe("google_maps_url");
+		expect(json_res[0].msg).toBe("Invalid google map url");
+	});
+
+	test("It should response with the restaurant invalid website link", async () => {
+		const response = await request(app)
+			.post("/restaurant")
+			.send({
+				name: "Jaka",
+				address: "Repslagargatan 8, 118 46 Stockholm, Sweden",
+				location: {
+					lat: 59.31781179999999,
+					lng: 18.0701277,
+				},
+				opening_hours: [
+					"Monday: 11:00 AM – 3:00 PM",
+					"Tuesday: 11:00 AM – 3:00 PM",
+					"Wednesday: 11:00 AM – 3:00 PM",
+					"Thursday: 11:00 AM – 3:00 PM",
+					"Friday: 11:00 AM – 3:00 PM",
+					"Saturday: Closed",
+					"Sunday: Closed",
+				],
+				phone_number: "08-641 20 77",
+				rating: 4.4,
+				price_level: 2,
+				icon: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+				google_maps_url: "https://maps.google.com/?cid=9369167126300605621",
+				website: "fbdfbdfc",
+				photo: "https://cdn.pixabay.com/photo/2016/11/18/22/21/architecture-1837150_1280.jpg",
+			})
+			.set("Authorization", jwt);
+		json_res = response.body;
+		expect(response.statusCode).toBe(422);
+		expect(json_res[0].param).toBe("website");
+		expect(json_res[0].msg).toBe("Invalid value");
+	});
+
+	test("It should response with the restaurant invalid photo link", async () => {
+		const response = await request(app)
+			.post("/restaurant")
+			.send({
+				name: "Jaka",
+				address: "Repslagargatan 8, 118 46 Stockholm, Sweden",
+				location: {
+					lat: 59.31781179999999,
+					lng: 18.0701277,
+				},
+				opening_hours: [
+					"Monday: 11:00 AM – 3:00 PM",
+					"Tuesday: 11:00 AM – 3:00 PM",
+					"Wednesday: 11:00 AM – 3:00 PM",
+					"Thursday: 11:00 AM – 3:00 PM",
+					"Friday: 11:00 AM – 3:00 PM",
+					"Saturday: Closed",
+					"Sunday: Closed",
+				],
+				phone_number: "08-641 20 77",
+				rating: 4.4,
+				price_level: 2,
+				icon: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+				google_maps_url: "https://maps.google.com/?cid=9369167126300605621",
+				website: "http://www.tamarindo.se/",
+				photo: "srgegdre",
+			})
+			.set("Authorization", jwt);
+		json_res = response.body;
+		expect(response.statusCode).toBe(422);
+		expect(json_res[0].param).toBe("photo");
+		expect(json_res[0].msg).toBe("Invalid value");
 	});
 });
 
