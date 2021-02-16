@@ -3,19 +3,6 @@ const app = require("./../app.js");
 
 let jwt;
 
-// beforeEach((done) => {
-// 	server = app.listen(4000, (err) => {
-// 		if (err) return done(err);
-
-// 		agent = request.agent(server); // since the application is already listening, it should use the allocated port
-// 		done();
-// 	});
-// });
-
-// afterEach(async (done) => {
-// 	return (await server) && server.close(done);
-// });
-
 beforeAll(async () => {
 	const response = await request(app).post("/user/login").send({
 		email: "campo@gmail.com",
@@ -183,51 +170,51 @@ describe("Test the API for getting a restaurants by different query parameters",
 });
 
 describe("Test the API for inserting resturant", () => {
-	// test("It should response with the inserted resturant", async () => {
-	// 	const response = await request(app)
-	// 		.post("/restaurant")
-	// 		.send({
-	// 			name: "King",
-	// 			address: "Repslagargatan 8, 118 46 Stockholm, Sweden",
-	// 			location: {
-	// 				lat: 59.31781179999999,
-	// 				lng: 18.0701277,
-	// 			},
-	// 			opening_hours: [
-	// 				"Monday: 11:00 AM – 3:00 PM",
-	// 				"Tuesday: 11:00 AM – 3:00 PM",
-	// 				"Wednesday: 11:00 AM – 3:00 PM",
-	// 				"Thursday: 11:00 AM – 3:00 PM",
-	// 				"Friday: 11:00 AM – 3:00 PM",
-	// 				"Saturday: Closed",
-	// 				"Sunday: Closed",
-	// 			],
-	// 			phone_number: "08-641 20 77",
-	// 			rating: 4.4,
-	// 			price_level: 2,
-	// 			icon: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
-	// 			google_maps_url: "https://maps.google.com/?cid=9369167126300605621",
-	// 			website: "http://www.tamarindo.se/",
-	// 			photo: "https://cdn.pixabay.com/photo/2016/11/18/22/21/architecture-1837150_1280.jpg",
-	// 		})
-	// 		.set("Authorization", jwt);
+	test("It should response with the inserted resturant", async () => {
+		const response = await request(app)
+			.post("/restaurant")
+			.send({
+				name: "King",
+				address: "Repslagargatan 8, 118 46 Stockholm, Sweden",
+				location: {
+					lat: 59.31781179999999,
+					lng: 18.0701277,
+				},
+				opening_hours: [
+					"Monday: 11:00 AM – 3:00 PM",
+					"Tuesday: 11:00 AM – 3:00 PM",
+					"Wednesday: 11:00 AM – 3:00 PM",
+					"Thursday: 11:00 AM – 3:00 PM",
+					"Friday: 11:00 AM – 3:00 PM",
+					"Saturday: Closed",
+					"Sunday: Closed",
+				],
+				phone_number: "08-641 20 77",
+				rating: 4.4,
+				price_level: 2,
+				icon: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+				google_maps_url: "https://maps.google.com/?cid=9369167126300605621",
+				website: "http://www.tamarindo.se/",
+				photo: "https://cdn.pixabay.com/photo/2016/11/18/22/21/architecture-1837150_1280.jpg",
+			})
+			.set("Authorization", jwt);
 
-	// 	json_res = response.body;
-	// 	expect(response.statusCode).toBe(200);
+		json_res = response.body;
+		expect(response.statusCode).toBe(200);
 
-	// 	expect(json_res.name).toBe("King");
-	// 	expect(json_res.address).toBe("Repslagargatan 8, 118 46 Stockholm, Sweden");
-	// 	expect(json_res.opening_hours[0]).toBe("Monday: 11:00 AM – 3:00 PM");
-	// 	expect(json_res.phone_number).toBe("08-641 20 77");
-	// 	expect(json_res.rating).toBe(4.4);
-	// 	expect(json_res.price_level).toBe(2);
-	// 	expect(json_res.icon).toBe("https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png");
-	// 	expect(json_res.google_maps_url).toBe("https://maps.google.com/?cid=9369167126300605621");
-	// 	expect(json_res.website).toBe("http://www.tamarindo.se/");
-	// 	expect(json_res.photo).toBe("https://cdn.pixabay.com/photo/2016/11/18/22/21/architecture-1837150_1280.jpg");
+		expect(json_res.name).toBe("King");
+		expect(json_res.address).toBe("Repslagargatan 8, 118 46 Stockholm, Sweden");
+		expect(json_res.opening_hours[0]).toBe("Monday: 11:00 AM – 3:00 PM");
+		expect(json_res.phone_number).toBe("08-641 20 77");
+		expect(json_res.rating).toBe(4.4);
+		expect(json_res.price_level).toBe(2);
+		expect(json_res.icon).toBe("https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png");
+		expect(json_res.google_maps_url).toBe("https://maps.google.com/?cid=9369167126300605621");
+		expect(json_res.website).toBe("http://www.tamarindo.se/");
+		expect(json_res.photo).toBe("https://cdn.pixabay.com/photo/2016/11/18/22/21/architecture-1837150_1280.jpg");
 
-	// 	json_res = response.body;
-	// });
+		json_res = response.body;
+	});
 
 	test("It should response with the restaurant name already taken resturant", async () => {
 		const response = await request(app)
