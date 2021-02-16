@@ -231,6 +231,16 @@ let restaurantPutValidation = {
 			},
 		},
 	},
+	limit: {
+		optional: true,
+		toInt: true,
+		isInt: true,
+	},
+	offset: {
+		optional: true,
+		toInt: true,
+		isInt: true,
+	},
 	rating: {
 		optional: true,
 		toFloat: true,

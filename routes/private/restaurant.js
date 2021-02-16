@@ -1,4 +1,4 @@
-module.exports = (router, config, express) => {
+module.exports = (router) => {
 	const { restaurantPostValidation, restaurantPutValidation } = require("../../models/validator/restaurant");
 	const { checkSchema, check, validationResult } = require("express-validator");
 	const modelRestaurant = require("../../models/mongoose/restaurant");

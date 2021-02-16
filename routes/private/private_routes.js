@@ -15,6 +15,6 @@ module.exports = (router, config, express, jwt) => {
 	});
 
 	let restaurant_router = express.Router();
-	require("./restaurant")(restaurant_router, config, express);
+	require("./restaurant")(restaurant_router);
 	router.use("/restaurant", restaurant_router);
 };
