@@ -37,19 +37,19 @@ describe("Test the API for login in the user", () => {
 });
 
 describe("Test the API for register user", () => {
-	test("It should response with the user information inserted", async () => {
-		const response = await request(app).post("/user/register").send({
-			email: "nihad@email.com",
-			password: "dfklldke",
-			first_name: "nihad",
-			last_name: "fer",
-		});
-		json_response = response.body;
-		expect(response.statusCode).toBe(200);
-		expect(json_response.email).toBe("nihad@email.com");
-		expect(json_response.first_name).toBe("nihad");
-		expect(json_response.last_name).toBe("fer");
-	});
+	// test("It should response with the user information inserted", async () => {
+	// 	const response = await request(app).post("/user/register").send({
+	// 		email: "nihad@email.com",
+	// 		password: "dfklldke",
+	// 		first_name: "nihad",
+	// 		last_name: "fer",
+	// 	});
+	// 	json_response = response.body;
+	// 	expect(response.statusCode).toBe(200);
+	// 	expect(json_response.email).toBe("nihad@email.com");
+	// 	expect(json_response.first_name).toBe("nihad");
+	// 	expect(json_response.last_name).toBe("fer");
+	// });
 
 	test("It should response with email already in use", async () => {
 		const response = await request(app).post("/user/register").send({
