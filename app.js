@@ -14,7 +14,7 @@ console.log("It is hope " + process.env.HEROKU);
 const app = express();
 app.use(bodyParser.json());
 
-mongoose.connect(process.env.MONGODB_URL || config.MONGODB_URL, {
+mongoose.connect(process.env.MONGODB_URL, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useCreateIndex: true,
