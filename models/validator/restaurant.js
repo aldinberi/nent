@@ -195,7 +195,7 @@ let restaurantPutValidation = {
 		optional: true,
 		custom: {
 			options: async (value) => {
-				if (!/[0-9 -/+]/.test(value) || !value) {
+				if (!/^[\s\d /+-]*$/.test(value) || !value) {
 					return Promise.reject("Invalid phone number");
 				}
 			},
