@@ -4,7 +4,7 @@
 	"description": "Assigment provided by NENT as part of a recruitment process for a traineeship posistion",
 	"main": "index.js",
 	"scripts": {
-		"test": "jest",
+		"test": "jest --forceExit",
 		"start": "node index.js"
 	},
 	"jest": {
