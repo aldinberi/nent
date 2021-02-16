@@ -1,7 +1,9 @@
 const request = require("supertest");
 const app = require("./../app.js");
+const modelRestaurant = require("../models/mongoose/restaurant");
 
 let jwt;
+let global_id;
 
 beforeAll(async () => {
 	const response = await request(app).post("/user/login").send({
@@ -42,6 +44,7 @@ describe("Test the API for inserting resturant", () => {
 			.set("Authorization", jwt);
 
 		let json_res = response.body;
+		global_id = json_res._id;
 		expect(response.statusCode).toBe(200);
 
 		expect(json_res.name).toBe("King");
@@ -501,6 +504,8 @@ describe("Test the API for inserting resturant", () => {
 	});
 });
 
-afterAll(() => {
+afterAll(async () => {
 	jwt = null;
+	await modelRestaurant.deleteOne({ _id: global_id });
+	global_id = null;
 });

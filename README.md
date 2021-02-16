@@ -9,6 +9,11 @@
 - [Setup](#setup)
 - [Features](#features)
 
+* [Required features](#required-features)
+* [Additional features](#additional-features)
+
+- [Possible improvments](#possible-improvments)
+
 ## General info
 
 The task in this project was to create a CRUD-based backend for a website for managing restaurants. For the creation of this backend, NodeJS was used together with Express. All the required features have been created and a few extras have been added that would complement the existing ones. All of the API created are documented using Swagger OpenAPI which can found at [link](https://nent-a.herokuapp.com/api-docs/)
@@ -75,6 +80,24 @@ One additional feature added is the inclusion of Travis CI which allows continuo
 
 #### Validation
 
-Validation has been added to all possible inputs of the APIs using express-validator which checks for the type of the inputted data as well as if it contains the right content, for example, the first name not having special characters.
+Validation has been added to all possible inputs of the APIs using express-validator which checks for the type of the inputted data as well as if it contains the right content, for example, the first name not having special characters or latitude being greater than 90.
 
 Besides the API validation, a validation schema has been added on the database level as well preventing the creating of additional fields, locking the type of data in the fields, and which fields are required for the creation of a record (document).
+
+#### User APIs
+
+User registration and login APIs have been added to secure the more sensitive APIs for updating, posting, and deleting the restaurants. On the register API, the email field is checked if it already exists in the database and the password is checked if it has been breached using the "have I been pwned" public database of breached passwords. The password is encrypted using bcrypt and then stored in the database.
+
+#### Swagger OpenAPI specification
+
+Because the goal of this test was to create APIs, OpenAPI specification has been added which can be accessed on this [link](https://nent-a.herokuapp.com/api-docs/). It presents in a clear way using generated frontend all the available APIs including all the relevant information about them as well as the possibility to test them.
+
+#### Singleton pattern
+
+Singleton design pattern has been used for DAO (Data Access Objects) to have a cleaner way to access the mongoose methods and avoid repetition as well as keeping only one instance of the DAO class instantiated.
+
+## Possible improvments
+
+### Dockerization
+
+Due to the lack of time and the unfamiliarity of docker containers, I didn't set up the project to work inside of a docker container. The master thesis I am working on right now on the topic of making a resource-aware schduler inludes the usage of docker container so in the near future I should be quite familiar with them.

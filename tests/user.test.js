@@ -1,5 +1,6 @@
 const request = require("supertest");
 const app = require("./../app.js");
+const modelUser = require("../models/mongoose/user");
 
 describe("Test the API for login in the user", () => {
 	test("It should response with the JWT token contaning user information", async () => {
@@ -74,4 +75,9 @@ describe("Test the API for register user", () => {
 		expect(response.statusCode).toBe(422);
 		expect(json_response[0].msg).toBe("Password has been breached");
 	});
+});
+
+afterAll(async () => {
+	jwt = null;
+	await modelUser.deleteOne({ email: "nihad@email.com" });
 });
