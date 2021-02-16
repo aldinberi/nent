@@ -47,6 +47,14 @@
  *         in: query
  *         description: The limit of the restaurant list.
  *         type: integer
+ *       - name: sort
+ *         in: query
+ *         description: The name of to sort (default descending).
+ *         type: string
+ *       - name: sortType
+ *         in: query
+ *         description: The type of sort, -1 for descending and 1 for ascending.
+ *         type: integer
  *       - name: name
  *         in: query
  *         description: The name of a restaurant.

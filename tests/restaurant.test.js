@@ -68,6 +68,15 @@ describe("Test the API for getting a restaurants by different query parameters",
 		expect(json_res[0].opening_hours).toContain("8:00 AM");
 	});
 
+	test("It should response with restaurants containing closing hours on Monday to be 3:00 PM", async () => {
+		const response = await request(app).get("/restaurant?day=Monday&endTime=3:00+PM");
+		json_res = response.body;
+		expect(response.statusCode).toBe(200);
+		expect(json_res[0].name).toBe("Tamarindo");
+		expect(json_res[0].opening_hours).toContain("Monday");
+		expect(json_res[0].opening_hours).toContain("3:00 PM");
+	});
+
 	test("It should response with status code 422 because of the invalid day", async () => {
 		const response = await request(app).get("/restaurant?day=monday!@#");
 		json_res = response.body;
@@ -92,22 +101,12 @@ describe("Test the API for getting a restaurants by different query parameters",
 		expect(json_res[0].msg).toBe("Invalid endTime");
 	});
 
-	test("It should response with restaurants containing closing hours on Monday to be 3:00 PM", async () => {
-		const response = await request(app).get("/restaurant?day=Monday&endTime=3:00+PM");
+	test("It should response with status code 422 because of the invalid startTime", async () => {
+		const response = await request(app).get("/restaurant?endTime=9:00@!+PM");
 		json_res = response.body;
-		expect(response.statusCode).toBe(200);
-		expect(json_res[0].name).toBe("Tamarindo");
-		expect(json_res[0].opening_hours).toContain("Monday");
-		expect(json_res[0].opening_hours).toContain("3:00 PM");
-	});
-
-	test("It should response with restaurants containing closing hours on Monday to be 3:00 PM", async () => {
-		const response = await request(app).get("/restaurant?day=Monday&endTime=3:00+PM");
-		json_res = response.body;
-		expect(response.statusCode).toBe(200);
-		expect(json_res[0].name).toBe("Tamarindo");
-		expect(json_res[0].opening_hours).toContain("Monday");
-		expect(json_res[0].opening_hours).toContain("3:00 PM");
+		expect(response.statusCode).toBe(422);
+		expect(json_res[0].param).toBe("endTime");
+		expect(json_res[0].msg).toBe("Invalid endTime");
 	});
 
 	test("It should response with restaurants with specific rating of 4.4", async () => {
@@ -118,11 +117,59 @@ describe("Test the API for getting a restaurants by different query parameters",
 		expect(json_res[0].rating).toBe(4.4);
 	});
 
+	test("It should response with status code 422 because of the invalid rating field", async () => {
+		const response = await request(app).get("/restaurant?rating=eee");
+		json_res = response.body;
+		expect(response.statusCode).toBe(422);
+		expect(json_res[0].param).toBe("rating");
+		expect(json_res[0].msg).toBe("Invalid value");
+	});
+
 	test("It should response with restaurants sorted by highest to lowest rating", async () => {
 		const response = await request(app).get("/restaurant?sort=rating");
 		json_res = response.body;
 		expect(json_res[0].rating).toBe(4.8);
 		expect(json_res[1].rating).toBeLessThanOrEqual(4.8);
 		expect(response.statusCode).toBe(200);
+	});
+
+	test("It should response with restaurants sorted by lowest to highest rating", async () => {
+		const response = await request(app).get("/restaurant?sort=rating&sortType=1");
+		json_res = response.body;
+		expect(json_res[0].rating).toBe(3.6);
+		expect(3.6).toBeLessThanOrEqual(json_res[1].rating);
+		expect(response.statusCode).toBe(200);
+	});
+
+	test("It should response with restaurants sorted by highest to lowest price level", async () => {
+		const response = await request(app).get("/restaurant?sort=price_level");
+		json_res = response.body;
+		expect(json_res[0].price_level).toBe(2);
+		expect(json_res[1].price_level).toBeLessThanOrEqual(2);
+		expect(response.statusCode).toBe(200);
+	});
+
+	test("It should response with restaurants sorted by lowest to highest price level", async () => {
+		const response = await request(app).get("/restaurant?sort=price_level&sortType=1");
+		json_res = response.body;
+		expect(json_res[0].price_level).toBe(1);
+		expect(1).toBeLessThanOrEqual(json_res[1].price_level);
+		expect(response.statusCode).toBe(200);
+	});
+
+	test("It should response with status code 422 because of the invalid sorting field", async () => {
+		const response = await request(app).get("/restaurant?sort=icon");
+		json_res = response.body;
+		expect(response.statusCode).toBe(422);
+		expect(json_res[0].param).toBe("sort");
+		expect(json_res[0].msg).toBe("Invalid sort field");
+	});
+
+	test("It should response with status code 422 because of the invalid sortType field", async () => {
+		const response = await request(app).get("/restaurant?sortType=www");
+		json_res = response.body;
+		expect(response.statusCode).toBe(422);
+		expect(json_res[0].param).toBe("sortType");
+		expect(json_res[0].msg).toBe("Invalid sort type");
 	});
 });

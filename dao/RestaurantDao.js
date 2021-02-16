@@ -55,6 +55,7 @@ class RestaurantDao {
 		let filter = {
 			[name && "name"]: { $regex: name, $options: "i" },
 			[address && "address"]: { $regex: address, $options: "i" },
+			[sort]: { $exists: true },
 		};
 
 		delete filter[undefined];
