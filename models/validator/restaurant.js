@@ -63,6 +63,7 @@ let restaurantPostValidation = {
 		},
 	},
 	price_level: {
+		toInt: true,
 		custom: {
 			options: async (value) => {
 				if (value < 1 || value > 5 || typeof value !== "number") {
@@ -72,6 +73,7 @@ let restaurantPostValidation = {
 		},
 	},
 	rating: {
+		toFloat: true,
 		custom: {
 			options: async (value) => {
 				if (value < 1 || value > 5 || typeof value !== "number") {
@@ -132,6 +134,30 @@ let restaurantPutValidation = {
 			},
 		},
 	},
+	day: {
+		optional: true,
+		isAlpha: true,
+	},
+	startTime: {
+		optional: true,
+		custom: {
+			options: async (value) => {
+				if (!/^[\s\da-zA-Z :]*$/.test(value) || !value) {
+					return Promise.reject("Invalid startTime");
+				}
+			},
+		},
+	},
+	endTime: {
+		optional: true,
+		custom: {
+			options: async (value) => {
+				if (!/^[\s\da-zA-Z :]*$/.test(value) || !value) {
+					return Promise.reject("Invalid endTime");
+				}
+			},
+		},
+	},
 	address: {
 		optional: true,
 		custom: {
@@ -172,6 +198,7 @@ let restaurantPutValidation = {
 	},
 	price_level: {
 		optional: true,
+		toInt: true,
 		custom: {
 			options: async (value) => {
 				if (value < 1 || value > 5 || typeof value !== "number") {
@@ -182,10 +209,11 @@ let restaurantPutValidation = {
 	},
 	rating: {
 		optional: true,
+		toFloat: true,
 		custom: {
 			options: async (value) => {
 				if (value < 1 || value > 5 || typeof value !== "number") {
-					return Promise.reject("Invalid rating");
+					return Promise.reject("Invalid rating is: " + typeof value);
 				}
 			},
 		},

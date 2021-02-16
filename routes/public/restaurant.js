@@ -1,11 +1,15 @@
 module.exports = (router) => {
 	const modelRestaurant = require("../../models/mongoose/restaurant");
 	const RestaurantDao = require("../../dao/RestaurantDao");
-	const { check, validationResult } = require("express-validator");
-
+	const { checkSchema, check, validationResult } = require("express-validator");
+	const { restaurantPutValidation } = require("../../models/validator/restaurant");
 	const restaurantDao = new RestaurantDao(modelRestaurant);
 
-	router.get("", (req, res) => {
+	router.get("", checkSchema(restaurantPutValidation), (req, res) => {
+		const validationErrors = validationResult(req);
+		if (!validationErrors.isEmpty()) {
+			return res.status(422).json(validationErrors.array());
+		}
 		const { day, startTime, endTime } = req.query;
 		if (day || startTime || endTime) {
 			restaurantDao.get_by_hours(req, res);

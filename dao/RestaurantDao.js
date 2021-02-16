@@ -85,7 +85,7 @@ class RestaurantDao {
 	async get_by_id(req, res) {
 		try {
 			let doc = await this.model.findOne({ _id: req.params.restaurantId });
-			res.json({ doc });
+			res.json(doc);
 		} catch (exception) {
 			if (exception) {
 				return res.status(400).json({ message: `Read failed! Reason: ${exception.errmsg || exception._message}` });
