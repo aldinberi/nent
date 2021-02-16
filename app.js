@@ -9,7 +9,7 @@ if (!process.env.HEROKU) {
 	config = require("./config");
 }
 
-console.log("It is hope " + process.env.DB);
+console.log("It is hope " + process.env.HEROKU);
 
 const app = express();
 app.use(bodyParser.json());
