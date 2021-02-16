@@ -63,6 +63,8 @@ let restaurantPostValidation = {
 		},
 	},
 	price_level: {
+		toInt: true,
+		isInt: true,
 		custom: {
 			options: async (value) => {
 				if (value < 1 || value > 5 || typeof value !== "number") {
@@ -72,6 +74,8 @@ let restaurantPostValidation = {
 		},
 	},
 	rating: {
+		toFloat: true,
+		isFloat: true,
 		custom: {
 			options: async (value) => {
 				if (value < 1 || value > 5 || typeof value !== "number") {
@@ -132,6 +136,51 @@ let restaurantPutValidation = {
 			},
 		},
 	},
+	day: {
+		optional: true,
+		isAlpha: true,
+	},
+	startTime: {
+		optional: true,
+		custom: {
+			options: async (value) => {
+				if (!/^[\s\da-zA-Z :]*$/.test(value) || !value) {
+					return Promise.reject("Invalid startTime");
+				}
+			},
+		},
+	},
+	endTime: {
+		optional: true,
+		custom: {
+			options: async (value) => {
+				if (!/^[\s\da-zA-Z :]*$/.test(value) || !value) {
+					return Promise.reject("Invalid endTime");
+				}
+			},
+		},
+	},
+	sort: {
+		optional: true,
+		custom: {
+			options: async (value) => {
+				if (!/^[\s\da-zA-Z_]*$/.test(value) || (!value.includes("rating") && !value.includes("price_level"))) {
+					return Promise.reject("Invalid sort field");
+				}
+			},
+		},
+	},
+	sortType: {
+		optional: true,
+		toInt: true,
+		custom: {
+			options: async (value) => {
+				if (value !== -1 && value !== 1) {
+					return Promise.reject("Invalid sort type");
+				}
+			},
+		},
+	},
 	address: {
 		optional: true,
 		custom: {
@@ -172,6 +221,8 @@ let restaurantPutValidation = {
 	},
 	price_level: {
 		optional: true,
+		toInt: true,
+		isInt: true,
 		custom: {
 			options: async (value) => {
 				if (value < 1 || value > 5 || typeof value !== "number") {
@@ -182,6 +233,8 @@ let restaurantPutValidation = {
 	},
 	rating: {
 		optional: true,
+		toFloat: true,
+		isFloat: true,
 		custom: {
 			options: async (value) => {
 				if (value < 1 || value > 5 || typeof value !== "number") {
