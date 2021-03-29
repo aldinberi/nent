@@ -1,6 +1,6 @@
-# NENT Tech Trainee 2021: Coding test
+# CRUD-based backend with usefull features
 
-> This project was part of the NENT Tech Trainee 2021: Coding test sent as part of the requitment process
+> The goal of this project is to create a secure CRUD-based backend on a restaurant datebase
 
 ## Table of contents
 
@@ -14,7 +14,7 @@
 
 ## General info
 
-The task in this project was to create a CRUD-based backend for a website for managing restaurants. For the creation of this backend, NodeJS was used together with Express. All the required features have been created and a few extras have been added that would complement the existing ones. All of the API created are documented using Swagger OpenAPI which can found at [link](https://nent-a.herokuapp.com/api-docs/)
+The task in this project was to create a CRUD-based backend for a website for managing restaurants. For the creation of this backend, NodeJS was used together with Express. All the usual CRUD APIs have been created and a few extra features have been added that would complement the existing ones. All of the API created are documented using Swagger OpenAPI which can found at [link](https://nent-a.herokuapp.com/api-docs/)
 
 ## Technologies
 
@@ -39,7 +39,7 @@ Be able to set up the project it is enough to have [NodeJS](https://nodejs.org/e
 
 ## Features
 
-### Required features
+### CRUD operations
 
 #### Endpoint for listing all restaurants
 
@@ -61,6 +61,10 @@ The API for deleting a single restaurant is located at the route `/restaurant/:i
 
 The API for listing all of the restaurants is located at the route `/restaurant` with the usage of the GET method. By sending query parameters that request the restaurants can be filtered by name, address, opening hours, closing hours, and days. Sorting is done on the field rating and price level in a manager descending by default and ascending by additional parameter. All data being sent as query parameters are being validated API for the right type and contents.
 
+#### Endpoint for updating restaurants
+
+The API for updating a single restaurant is located at the route `/restaurant/:id` with the usage of PUT method. One requirement to be able to post is for the request to have in the header a JWT token with a specific signature. This JWT token is generated when a user logs in using the route `/user/login`. This has been added because in the real world we wouldn't let anyone be able to post restaurants on the systems but rather only specific individuals. All data being send in the body of the PUT request as well the provided id is being validated by the API for the right type and contents. One example is that it's not allowed to post a restaurant with a name that already exists in the database.
+
 #### Testing
 
 The testing framework used for the creation of the tests is [Jest](https://nodejs.org/en/). In total 55 tests have been created which are checking various validation on body and query parameters and the functionalities of the APIs. Continuous integration has been implemented using Travis CI in such a way that every time something is committed on the main branch Travis CI builds the project and runs the included tests. If all pass Travis deploys the project on Heroku otherwise it sends a mail saying not all tests passed and nothing is deployed.
@@ -81,10 +85,6 @@ One additional feature added is the inclusion of Travis CI which allows continuo
 Validation has been added to all possible inputs of the APIs using express-validator which checks for the type of the inputted data as well as if it contains the right content, for example, the first name not having special characters or latitude being greater than 90.
 
 Besides the API validation, a validation schema has been added on the database level as well preventing the creating of additional fields, locking the type of data in the fields, and which fields are required for the creation of a record (document).
-
-#### Update restaurant API
-
-For full CRUD an update API is required. The API for updating a single restaurant is located at the route `/restaurant/:id` with the usage of PUT method. One requirement to be able to post is for the request to have in the header a JWT token with a specific signature. This JWT token is generated when a user logs in using the route `/user/login`. This has been added because in the real world we wouldn't let anyone be able to post restaurants on the systems but rather only specific individuals. All data being send in the body of the PUT request as well the provided id is being validated by the API for the right type and contents. One example is that it's not allowed to post a restaurant with a name that already exists in the database.
 
 #### User APIs
 
