@@ -13,7 +13,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-	res.send("Please go to /api-docs for OpenAPI specification");
+	res.redirect("/api-docs");
 });
 
 mongoose.connect(process.env.MONGODB_URL || config.MONGODB_URL, {
