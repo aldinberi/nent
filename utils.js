@@ -1,5 +1,6 @@
 const crypto = require("crypto");
 const axios = require("axios");
+const { validationResult } = require("express-validator");
 
 check_password = async (password) => {
 	let shasum = crypto.createHash("sha1");
@@ -11,4 +12,11 @@ check_password = async (password) => {
 	return response.data.includes(control_hash);
 };
 
-module.exports = check_password;
+check_validator_errors = (req, res) => {
+	const validationErrors = validationResult(req);
+	if (!validationErrors.isEmpty()) {
+		return validationErrors.array();
+	}
+};
+
+module.exports = { check_password, check_validator_errors };

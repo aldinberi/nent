@@ -1,5 +1,5 @@
 const userModel = require("../mongoose/user");
-const check_password = require("../../utils");
+const { check_password } = require("../../utils");
 let userValidation = {
 	first_name: {
 		custom: {

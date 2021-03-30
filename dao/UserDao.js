@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const { check_validator_errors } = require("../utils");
 class UserDao {
 	constructor(model, config, jwt) {
 		if (!!UserDao.instance) {
@@ -14,6 +15,11 @@ class UserDao {
 	}
 
 	async register(req, res) {
+		let validator_response = check_validator_errors(req, res);
+		if (validator_response) {
+			return res.status(422).json(validator_response);
+		}
+
 		bcrypt.hash(req.body.password, 10, async (err, hash) => {
 			try {
 				req.body.password = hash;

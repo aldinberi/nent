@@ -7,18 +7,11 @@ module.exports = (router, config, jwt) => {
 	const userDao = new UserDao(userModel, config, jwt);
 
 	router.post("/register", checkSchema(userValidation), (req, res) => {
-		const validationErrors = validationResult(req);
-		if (!validationErrors.isEmpty()) {
-			return res.status(422).json(validationErrors.array());
-		}
+		check_validator_errors(req, res);
 		userDao.register(req, res);
 	});
 
 	router.post("/login", check("email").isEmail().normalizeEmail(), async (req, res) => {
-		const validationErrors = validationResult(req);
-		if (!validationErrors.isEmpty()) {
-			return res.status(422).json(validationErrors.array());
-		}
 		userDao.login(req, res);
 	});
 };
