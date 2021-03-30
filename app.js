@@ -1,4 +1,3 @@
-const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const express = require("express");
 
@@ -10,7 +9,7 @@ if (!process.env.HEROKU) {
 }
 
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.get("/", (req, res) => {
 	res.redirect("/api-docs");
