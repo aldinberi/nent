@@ -117,7 +117,7 @@ class RestaurantDao {
 		}
 		try {
 			let doc = await this.model.deleteOne({ _id: req.params.restaurantId });
-			res.send(doc);
+			res.json(doc);
 		} catch (exception) {
 			if (exception) {
 				res.status(400).json({ message: `Delete failed. Reason: ${exception.errmsg || exception._message}` });
@@ -133,7 +133,7 @@ class RestaurantDao {
 			let doc = await this.model.findOneAndUpdate({ _id: req.params.restaurantId }, req.body, {
 				new: true,
 			});
-			res.send(doc);
+			res.json(doc);
 		} catch (exception) {
 			if (exception) {
 				res.status(400).json({ message: `Update failed. Reason: ${exception.errmsg || exception._message}` });

@@ -24,8 +24,7 @@ module.exports = (router, config, swaggerJSDoc, swaggerUi) => {
 	const swaggerSpec = swaggerJSDoc(options);
 
 	router.get("/swagger.json", function (req, res) {
-		res.setHeader("Content-Type", "application/json");
-		res.send(swaggerSpec);
+		res.json(swaggerSpec);
 	});
 
 	router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
