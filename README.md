@@ -22,7 +22,6 @@ The node packages used for the creation of this project are:
 
 - axios - version 0.21.1
 - bcrypt - version 5.0.0
-- body-parser - version 1.19.0
 - express - version 4.17.1
 - express-validator - version 6.9.2
 - jest - version 26.6.3
