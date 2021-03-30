@@ -1,5 +1,6 @@
 const request = require("supertest");
 const app = require("../app.js");
+let jwt;
 
 beforeAll(async () => {
 	const response = await request(app).post("/user/login").send({
