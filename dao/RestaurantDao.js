@@ -11,6 +11,10 @@ class RestaurantDao {
 	}
 
 	async get_by_hours(req, res) {
+		let validator_response = check_validator_errors(req, res);
+		if (validator_response) {
+			return res.status(422).json(validator_response);
+		}
 		const { limit, offset, startTime, endTime, day } = req.query;
 		let limitNumber = Number(limit) || 5;
 		let offsetNumber = Number(offset) || 0;
@@ -44,6 +48,10 @@ class RestaurantDao {
 	}
 
 	async get_by_fields(req, res) {
+		let validator_response = check_validator_errors(req, res);
+		if (validator_response) {
+			return res.status(422).json(validator_response);
+		}
 		const { limit, offset, sortType, sort, name, address } = req.query;
 		let limitNumber = Number(limit) || 5;
 		let offsetNumber = Number(offset) || 0;
@@ -72,6 +80,10 @@ class RestaurantDao {
 	}
 
 	async post(req, res) {
+		let validator_response = check_validator_errors(req, res);
+		if (validator_response) {
+			return res.status(422).json(validator_response);
+		}
 		try {
 			let doc = await this.model.create(req.body);
 			res.json(doc);
@@ -84,6 +96,10 @@ class RestaurantDao {
 	}
 
 	async get_by_id(req, res) {
+		let validator_response = check_validator_errors(req, res);
+		if (validator_response) {
+			return res.status(422).json(validator_response);
+		}
 		try {
 			let doc = await this.model.findOne({ _id: req.params.restaurantId });
 			res.json(doc);
@@ -95,6 +111,10 @@ class RestaurantDao {
 	}
 
 	async delete(req, res) {
+		let validator_response = check_validator_errors(req, res);
+		if (validator_response) {
+			return res.status(422).json(validator_response);
+		}
 		try {
 			let doc = await this.model.deleteOne({ _id: req.params.restaurantId });
 			res.send(doc);
@@ -105,6 +125,10 @@ class RestaurantDao {
 		}
 	}
 	async update(req, res) {
+		let validator_response = check_validator_errors(req, res);
+		if (validator_response) {
+			return res.status(422).json(validator_response);
+		}
 		try {
 			let doc = await this.model.findOneAndUpdate({ _id: req.params.restaurantId }, req.body, {
 				new: true,

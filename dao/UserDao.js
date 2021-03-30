@@ -36,6 +36,10 @@ class UserDao {
 	}
 
 	async login(req, res) {
+		let validator_response = check_validator_errors(req, res);
+		if (validator_response) {
+			return res.status(422).json(validator_response);
+		}
 		try {
 			let jwtToken;
 
