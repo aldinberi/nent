@@ -35,7 +35,7 @@ The node packages used for the creation of this project are:
 
 ## Setup
 
-Be able to set up the project it is enough to have [NodeJS](https://nodejs.org/en/) installed on your machine locally and to execute `npm install` in the terminal inside of the project folder. To start the project is it enough to execute `npm start`. One problem that may occur is that the config file is missing from the repository because of security reasons, it will be mailed to HR together with the link to this repository.
+Be able to set up the project it is enough to have [NodeJS](https://nodejs.org/en/) installed on your machine locally and to execute `npm install` in the terminal inside of the project folder. To start the project is it enough to execute `npm start`. One problem that may occur is that the config file is missing from the repository because of security reasons.
 
 ## Features
 
