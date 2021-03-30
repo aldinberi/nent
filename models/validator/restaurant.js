@@ -1,281 +1,193 @@
 const modelRestaurant = require("../mongoose/restaurant");
-let restaurantPostValidation = {
-	name: {
-		custom: {
-			options: async (value) => {
-				if (!/^[\s\da-zA-ZåäöÅÄÖ() /,-,&]*$/.test(value)) {
-					return Promise.reject("Invalid name");
-				}
-				let restaurant = await modelRestaurant.findOne({ name: value });
-				if (restaurant) {
-					return Promise.reject("Restaurant with that name already in use");
-				}
+class RestaurantValidator {
+	constructor(optional = false) {
+		this.name = {
+			optional: optional,
+			custom: {
+				options: async (value) => {
+					if (!/^[\s\da-zA-ZåäöÅÄÖ() /,-,&]*$/.test(value) || !value) {
+						return Promise.reject("Invalid name");
+					}
+					let restaurant = await modelRestaurant.findOne({ name: value });
+					if (restaurant) {
+						return Promise.reject("Restaurant with that name already in use");
+					}
+				},
 			},
-		},
-	},
-	opening_hours: {
-		custom: {
-			options: async (value) => {
-				let res = false;
-				if (value) {
-					res = value.every((i) => {
-						return /^[\s\da-zA-Z :–]*$/.test(i) && typeof i === "string";
-					});
-				}
-				if (!res) {
-					return Promise.reject("Invalid opening hours");
-				}
-			},
-		},
-	},
-	address: {
-		custom: {
-			options: async (value) => {
-				if (!/^[\s\da-zA-ZåäöÅÄÖ() /,-]*$/.test(value) || !value) {
-					return Promise.reject("Invalid address");
-				}
-			},
-		},
-	},
-	phone_number: {
-		custom: {
-			options: async (value) => {
-				if (!/^[\s\d /+-]*$/.test(value) || !value) {
-					return Promise.reject("Invalid phone number");
-				}
-			},
-		},
-	},
-	location: {
-		custom: {
-			options: async (value) => {
-				if (!value) {
-					return Promise.reject("Invalid location");
-				}
-				if (value.lat < -90 || value.lat > 90 || typeof value.lat !== "number") {
-					return Promise.reject("Invalid latitude");
-				}
+		};
 
-				if (value.lng < -180 || value.lng > 180 || typeof value.lng !== "number") {
-					return Promise.reject("Invalid longitude");
-				}
+		this.opening_hours = {
+			optional: optional,
+			custom: {
+				options: async (value) => {
+					let res = false;
+					if (value) {
+						res = value.every((i) => {
+							return /^[\s\da-zA-Z :–]*$/.test(i) && typeof i === "string";
+						});
+					}
+					if (!res) {
+						return Promise.reject("Invalid opening hours");
+					}
+				},
 			},
-		},
-	},
-	price_level: {
-		toInt: true,
-		isInt: true,
-		custom: {
-			options: async (value) => {
-				if (value < 1 || value > 5 || typeof value !== "number") {
-					return Promise.reject("Invalid price_level");
-				}
-			},
-		},
-	},
-	rating: {
-		toFloat: true,
-		isFloat: true,
-		custom: {
-			options: async (value) => {
-				if (value < 1 || value > 5 || typeof value !== "number") {
-					return Promise.reject("Invalid rating");
-				}
-			},
-		},
-	},
-	icon: {
-		isURL: true,
-	},
-	google_maps_url: {
-		isURL: true,
-		custom: {
-			options: async (value) => {
-				if (!value.includes("maps.google.com")) {
-					return Promise.reject("Invalid google map url");
-				}
-			},
-		},
-	},
-	website: {
-		isURL: true,
-	},
-	photo: {
-		isURL: true,
-	},
-};
+		};
 
-let restaurantPutValidation = {
-	name: {
-		optional: true,
-		custom: {
-			options: async (value) => {
-				if (!/^[\s\da-zA-ZåäöÅÄÖ() /,-,&]*$/.test(value) || !value) {
-					return Promise.reject("Invalid name");
-				}
-				let restaurant = await modelRestaurant.findOne({ name: value });
-				if (restaurant) {
-					return Promise.reject("Restaurant with that name already in use");
-				}
-			},
-		},
-	},
-	opening_hours: {
-		optional: true,
-		custom: {
-			options: async (value) => {
-				let res = false;
-				if (value) {
-					res = value.every((i) => {
-						return /^[\s\da-zA-Z :–]*$/.test(i) && typeof i === "string";
-					});
-				}
-				if (!res) {
-					return Promise.reject("Invalid opening hours");
-				}
-			},
-		},
-	},
-	day: {
-		optional: true,
-		isAlpha: true,
-	},
-	startTime: {
-		optional: true,
-		custom: {
-			options: async (value) => {
-				if (!/^[\s\da-zA-Z :]*$/.test(value) || !value) {
-					return Promise.reject("Invalid startTime");
-				}
-			},
-		},
-	},
-	endTime: {
-		optional: true,
-		custom: {
-			options: async (value) => {
-				if (!/^[\s\da-zA-Z :]*$/.test(value) || !value) {
-					return Promise.reject("Invalid endTime");
-				}
-			},
-		},
-	},
-	sort: {
-		optional: true,
-		custom: {
-			options: async (value) => {
-				if (!/^[\s\da-zA-Z_]*$/.test(value) || (!value.includes("rating") && !value.includes("price_level"))) {
-					return Promise.reject("Invalid sort field");
-				}
-			},
-		},
-	},
-	sortType: {
-		optional: true,
-		toInt: true,
-		custom: {
-			options: async (value) => {
-				if (value !== -1 && value !== 1) {
-					return Promise.reject("Invalid sort type");
-				}
-			},
-		},
-	},
-	address: {
-		optional: true,
-		custom: {
-			options: async (value) => {
-				if (!/^[\s\da-zA-ZåäöÅÄÖ() /,-]*$/.test(value) || !value) {
-					return Promise.reject("Invalid address");
-				}
-			},
-		},
-	},
-	phone_number: {
-		optional: true,
-		custom: {
-			options: async (value) => {
-				if (!/^[\s\d /+-]*$/.test(value) || !value) {
-					return Promise.reject("Invalid phone number");
-				}
-			},
-		},
-	},
-	location: {
-		optional: true,
-		custom: {
-			options: async (value) => {
-				if (!value) {
-					return Promise.reject("Invalid location");
-				}
+		this.day = {
+			optional: true,
+			isAlpha: true,
+		};
 
-				if (value.lat < -90 || value.lat > 90 || typeof value.lat !== "number") {
-					return Promise.reject("Invalid latitude");
-				}
+		this.startTime = {
+			optional: true,
+			custom: {
+				options: async (value) => {
+					if (!/^[\s\da-zA-Z :]*$/.test(value) || !value) {
+						return Promise.reject("Invalid startTime");
+					}
+				},
+			},
+		};
 
-				if (value.lng < -180 || value.lng > 180 || typeof value.lng !== "number") {
-					return Promise.reject("Invalid longitude");
-				}
+		this.endTime = {
+			optional: true,
+			custom: {
+				options: async (value) => {
+					if (!/^[\s\da-zA-Z :]*$/.test(value) || !value) {
+						return Promise.reject("Invalid endTime");
+					}
+				},
 			},
-		},
-	},
-	price_level: {
-		optional: true,
-		toInt: true,
-		isInt: true,
-		custom: {
-			options: async (value) => {
-				if (value < 1 || value > 5 || typeof value !== "number") {
-					return Promise.reject("Invalid price_level");
-				}
-			},
-		},
-	},
-	limit: {
-		optional: true,
-		toInt: true,
-		isInt: true,
-	},
-	offset: {
-		optional: true,
-		toInt: true,
-		isInt: true,
-	},
-	rating: {
-		optional: true,
-		toFloat: true,
-		isFloat: true,
-		custom: {
-			options: async (value) => {
-				if (value < 1 || value > 5 || typeof value !== "number") {
-					return Promise.reject("Invalid rating");
-				}
-			},
-		},
-	},
-	icon: {
-		optional: true,
-		isURL: true,
-	},
-	google_maps_url: {
-		optional: true,
-		isURL: true,
-		custom: {
-			options: async (value) => {
-				if (!value.includes("maps.google.com")) {
-					return Promise.reject("Invalid google map url");
-				}
-			},
-		},
-	},
-	website: {
-		optional: true,
-		isURL: true,
-	},
-	photo: {
-		optional: true,
-		isURL: true,
-	},
-};
+		};
 
-module.exports = { restaurantPostValidation, restaurantPutValidation };
+		this.sort = {
+			optional: true,
+			custom: {
+				options: async (value) => {
+					if (!/^[\s\da-zA-Z_]*$/.test(value) || (!value.includes("rating") && !value.includes("price_level"))) {
+						return Promise.reject("Invalid sort field");
+					}
+				},
+			},
+		};
+
+		this.sortType = {
+			optional: true,
+			toInt: true,
+			custom: {
+				options: async (value) => {
+					if (value !== -1 && value !== 1) {
+						return Promise.reject("Invalid sort type");
+					}
+				},
+			},
+		};
+
+		this.address = {
+			optional: optional,
+			custom: {
+				options: async (value) => {
+					if (!/^[\s\da-zA-ZåäöÅÄÖ() /,-]*$/.test(value) || !value) {
+						return Promise.reject("Invalid address");
+					}
+				},
+			},
+		};
+
+		this.phone_number = {
+			optional: optional,
+			custom: {
+				options: async (value) => {
+					if (!/^[\s\d /+-]*$/.test(value) || !value) {
+						return Promise.reject("Invalid phone number");
+					}
+				},
+			},
+		};
+
+		this.location = {
+			optional: optional,
+			custom: {
+				options: async (value) => {
+					if (!value) {
+						return Promise.reject("Invalid location");
+					}
+
+					if (value.lat < -90 || value.lat > 90 || typeof value.lat !== "number") {
+						return Promise.reject("Invalid latitude");
+					}
+
+					if (value.lng < -180 || value.lng > 180 || typeof value.lng !== "number") {
+						return Promise.reject("Invalid longitude");
+					}
+				},
+			},
+		};
+
+		this.price_level = {
+			optional: optional,
+			toInt: true,
+			isInt: true,
+			custom: {
+				options: async (value) => {
+					if (value < 1 || value > 5 || typeof value !== "number") {
+						return Promise.reject("Invalid price_level");
+					}
+				},
+			},
+		};
+
+		this.limit = {
+			optional: true,
+			toInt: true,
+			isInt: true,
+		};
+
+		this.offset = {
+			optional: true,
+			toInt: true,
+			isInt: true,
+		};
+
+		this.rating = {
+			optional: true,
+			toFloat: true,
+			isFloat: true,
+			custom: {
+				options: async (value) => {
+					if (value < 1 || value > 5 || typeof value !== "number") {
+						return Promise.reject("Invalid rating");
+					}
+				},
+			},
+		};
+
+		this.icon = {
+			optional: optional,
+			isURL: true,
+		};
+
+		this.google_maps_url = {
+			optional: optional,
+			isURL: true,
+			custom: {
+				options: async (value) => {
+					if (!value.includes("maps.google.com")) {
+						return Promise.reject("Invalid google map url");
+					}
+				},
+			},
+		};
+
+		this.website = {
+			optional: optional,
+			isURL: true,
+		};
+		this.photo = {
+			optional: optional,
+			isURL: true,
+		};
+	}
+}
+
+module.exports = RestaurantValidator;

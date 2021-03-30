@@ -1,12 +1,15 @@
 module.exports = (router) => {
-	const { restaurantPostValidation, restaurantPutValidation } = require("../../models/validator/restaurant");
 	const { checkSchema, check } = require("express-validator");
 	const modelRestaurant = require("../../models/mongoose/restaurant");
 	const RestaurantDao = require("../../dao/RestaurantDao");
+	const RestaurantValidator = require("../../models/validator/restaurant");
 
 	const restaurantDao = new RestaurantDao(modelRestaurant);
 
-	router.post("", checkSchema(restaurantPostValidation), (req, res) => {
+	const postRestaurantValidator = new RestaurantValidator();
+	const putRestaurantValidator = new RestaurantValidator(true);
+
+	router.post("", checkSchema(postRestaurantValidator), (req, res) => {
 		restaurantDao.post(req, res);
 	});
 
@@ -17,7 +20,7 @@ module.exports = (router) => {
 	router.put(
 		"/:restaurantId",
 		check("restaurantId").isAlphanumeric(),
-		checkSchema(restaurantPutValidation),
+		checkSchema(putRestaurantValidator),
 		async (req, res) => {
 			restaurantDao.update(req, res);
 		}
