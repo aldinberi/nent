@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 const express = require("express");
+const morgan = require("morgan");
+const path = require("path");
+const fs = require("fs");
+const app = express();
 
 /* Configuration import */
 let config;
@@ -8,8 +12,10 @@ if (!process.env.HEROKU) {
 	config = require("./config");
 }
 
-const app = express();
 app.use(express.json());
+
+let accessLogStream = fs.createWriteStream(path.join(__dirname, "access.log"), { flags: "a" });
+app.use(morgan("combined", { stream: accessLogStream }));
 
 app.get("/", (req, res) => {
 	res.redirect("/api-docs");
