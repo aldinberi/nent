@@ -85,6 +85,10 @@ Validation has been added to all possible inputs of the APIs using express-valid
 
 Besides the API validation, a validation schema has been added on the database level as well preventing the creating of additional fields, locking the type of data in the fields, and which fields are required for the creation of a record (document).
 
+#### Logging
+
+Logging of all requests has been added using morgan package where the informantion about methorn, path, status, requests and response are saved on a logging file on the server.
+
 #### User APIs
 
 User registration and login APIs have been added to secure the more sensitive APIs for updating, posting, and deleting the restaurants. On the register API, the email field is checked if it already exists in the database and the password is checked if it has been breached using the "have I been pwned" public database of breached passwords. The password is encrypted using bcrypt and then stored in the database.
