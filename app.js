@@ -14,12 +14,9 @@ if (!process.env.HEROKU) {
 
 app.use(express.json());
 
+//middleware for logging requests
 let accessLogStream = fs.createWriteStream(path.join(__dirname, "access.log"), { flags: "a" });
 app.use(morgan("combined", { stream: accessLogStream }));
-
-app.get("/", (req, res) => {
-	res.redirect("/api-docs");
-});
 
 mongoose.connect(process.env.MONGODB_URL || config.MONGODB_URL, {
 	useNewUrlParser: true,
@@ -28,6 +25,7 @@ mongoose.connect(process.env.MONGODB_URL || config.MONGODB_URL, {
 	useFindAndModify: false,
 });
 
+//Import all routes
 let router = express.Router();
 require("./routes/routes")(router, config, express);
 app.use(router);

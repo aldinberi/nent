@@ -1,4 +1,5 @@
 const modelRestaurant = require("../mongoose/restaurant");
+
 class RestaurantValidator {
 	constructor(optional = false) {
 		this.name = {

@@ -1,4 +1,5 @@
 module.exports = (router, config, express, jwt) => {
+	//Middleware protecting private routes
 	router.use((req, res, next) => {
 		let authorization = req.get("Authorization");
 		if (authorization) {
@@ -14,6 +15,7 @@ module.exports = (router, config, express, jwt) => {
 		}
 	});
 
+	//Import private restaurant routes
 	let restaurant_router = express.Router();
 	require("./restaurant")(restaurant_router);
 	router.use("/restaurant", restaurant_router);
