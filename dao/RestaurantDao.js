@@ -10,49 +10,13 @@ class RestaurantDao {
 		return this;
 	}
 
-	async get_by_hours(req, res) {
+	async filter(req, res) {
 		let validator_response = check_validator_errors(req, res);
 		if (validator_response) {
 			return res.status(422).json(validator_response);
 		}
-		const { limit, offset, startTime, endTime, day } = req.query;
-		let limitNumber = Number(limit) || 5;
-		let offsetNumber = Number(offset) || 0;
-		let startString = "";
-		let endString = "";
-		let dayString = day || "";
-
-		if (startTime) {
-			startString = startString + ": " + startTime;
-		}
-
-		if (endTime) {
-			endString = endString + " – " + endTime;
-		}
-
-		try {
-			let docs = await this.model.aggregate([
-				{ $unwind: "$opening_hours" },
-				{ $match: { opening_hours: { $regex: dayString, $options: "i" } } },
-				{ $match: { opening_hours: { $regex: startString, $options: "i" } } },
-				{ $match: { opening_hours: { $regex: endString, $options: "i" } } },
-				{ $skip: offsetNumber },
-				{ $limit: limitNumber },
-			]);
-			res.json(docs);
-		} catch (exception) {
-			if (exception) {
-				return res.status(400).json({ message: `Read failed! Reason: ${exception.errmsg || exception._message}` });
-			}
-		}
-	}
-
-	async get_by_fields(req, res) {
-		let validator_response = check_validator_errors(req, res);
-		if (validator_response) {
-			return res.status(422).json(validator_response);
-		}
-		const { limit, offset, sortType, sort, name, address } = req.query;
+		let pipeline = [];
+		const { limit, offset, startTime, endTime, day, sortType, sort, name, address } = req.query;
 		let limitNumber = Number(limit) || 5;
 		let offsetNumber = Number(offset) || 0;
 
@@ -69,8 +33,39 @@ class RestaurantDao {
 		delete filter[undefined];
 		delete toSort[undefined];
 
+		if (Object.entries(filter).length !== 0) {
+			pipeline.push({ $match: filter });
+		}
+
+		if (day || startTime || endTime) {
+			let startString = "";
+			let endString = "";
+			let dayString = day || "";
+
+			if (startTime) {
+				startString = startString + ": " + startTime;
+			}
+
+			if (endTime) {
+				endString = endString + " – " + endTime;
+			}
+
+			pipeline.push(
+				{ $unwind: "$opening_hours" },
+				{ $match: { opening_hours: { $regex: dayString, $options: "i" } } },
+				{ $match: { opening_hours: { $regex: startString, $options: "i" } } },
+				{ $match: { opening_hours: { $regex: endString, $options: "i" } } }
+			);
+		}
+
+		if (Object.entries(toSort).length !== 0) {
+			pipeline.push({ $sort: toSort });
+		}
+
+		pipeline.push({ $skip: offsetNumber }, { $limit: limitNumber });
+
 		try {
-			let docs = await this.model.find(filter).skip(offsetNumber).limit(limitNumber).sort(toSort);
+			let docs = await this.model.aggregate(pipeline);
 			res.json(docs);
 		} catch (exception) {
 			if (exception) {

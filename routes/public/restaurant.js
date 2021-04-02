@@ -9,12 +9,7 @@ module.exports = (router) => {
 
 	//API route for filtering restaurants
 	router.get("", checkSchema(getRestaurantValidator), (req, res) => {
-		const { day, startTime, endTime } = req.query;
-		if (day || startTime || endTime) {
-			restaurantDao.get_by_hours(req, res);
-		} else {
-			restaurantDao.get_by_fields(req, res);
-		}
+		restaurantDao.filter(req, res);
 	});
 	//API route for fetching a single restaurant based on id
 	router.get("/:restaurantId", check("restaurantId").isAlphanumeric(), (req, res) => {
