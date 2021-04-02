@@ -5,13 +5,15 @@ class RestaurantValidator {
 		this.name = {
 			optional: optional,
 			custom: {
-				options: async (value) => {
+				options: async (value, { location }) => {
 					if (!/^[\s\da-zA-ZåäöÅÄÖ() /,-,&]*$/.test(value) || !value) {
 						return Promise.reject("Invalid name");
 					}
-					let restaurant = await modelRestaurant.findOne({ name: value });
-					if (restaurant) {
-						return Promise.reject("Restaurant with that name already in use");
+					if (location !== "query") {
+						let restaurant = await modelRestaurant.findOne({ name: value });
+						if (restaurant) {
+							return Promise.reject("Restaurant with that name already in use");
+						}
 					}
 				},
 			},
