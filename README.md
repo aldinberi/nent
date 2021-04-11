@@ -1,4 +1,4 @@
-# CRUD-based backend in Node.js with usefull features
+# CRUD-based backend in Node.js with useful features
 
 > The goal of this project is to create a secure CRUD-based backend in Node.js on a restaurant MongoDB database
 
