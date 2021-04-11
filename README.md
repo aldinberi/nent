@@ -1,6 +1,6 @@
 # CRUD-based backend with usefull features
 
-> The goal of this project is to create a secure CRUD-based backend on a restaurant datebase
+> The goal of this project is to create a secure CRUD-based backend in Node.js on a restaurant MongoDB database
 
 ## Table of contents
 
@@ -95,7 +95,7 @@ User registration and login APIs have been added to secure the more sensitive AP
 
 #### Swagger OpenAPI specification
 
-Because the goal of this test was to create APIs, OpenAPI specification has been added which can be accessed on this [link](https://nent-a.herokuapp.com/api-docs/). It presents in a clear way using generated frontend all the available APIs including all the relevant information about them as well as the possibility to test them.
+OpenAPI specification has been added which can be accessed on this [link](https://nent-a.herokuapp.com/api-docs/). It presents in a clear way using generated frontend all the available APIs including all the relevant information about them as well as the possibility to test them.
 
 #### Singleton pattern
 
